@@ -1,9 +1,12 @@
 const app = require("../app");
 const { expect } = require("chai");
-// import db from "../db/connection";
-// import { seed } from "../db/seed";
+
+const data = require("../db/data");
+const seed = require("../db/seeds/seed");
 
 const request = require("supertest");
+
+beforeEach(() => seed(data));
 
 describe("app", () => {
   describe("/users", () => {
