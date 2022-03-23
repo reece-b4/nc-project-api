@@ -5,3 +5,15 @@ exports.fetchUsers = () => {
     return documents ? documents : [];
   });
 };
+
+exports.addUser = (username) => {
+  return projectApi
+    .post("/users", {
+      fields: {
+        username: {
+          stringValue: "newUser",
+        },
+      },
+    })
+    .then(({ data }) => data);
+};
