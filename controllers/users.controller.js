@@ -1,6 +1,6 @@
 const { fetchUsers, addUser } = require("../models/users.model");
 
-exports.getUsers = (_, res, next) => {
+const getUsers = (_, res, next) => {
   fetchUsers()
     .then((data) => {
       const users = data.map((user) => {
@@ -14,9 +14,19 @@ exports.getUsers = (_, res, next) => {
     .catch(next);
 };
 
-exports.postUser = (req, res, next) => {
+const postUser = (req, res, next) => {
   const username = req.body.username;
-  addUser(username)
+  const usernameTaken = checkUsernameExists(username);
+  return Promise.all([usernameTaken])
+    .then(([usernameTaken]) => {
+      if (usernameTaken) {
+        return Promise.reject({
+          status: 400,
+          msg: "username taken",
+        });
+      }
+      return addUser(username);
+    })
     .then((data) => {
       const user = {
         userId: data.name.split("/").pop(),
@@ -26,3 +36,16 @@ exports.postUser = (req, res, next) => {
     })
     .catch(next);
 };
+
+const checkUsernameExists = (username) => {
+  return fetchUsers().then((data) => {
+    if (
+      data.some((user) => {
+        if (user.fields.username.stringValue === username) return true;
+      })
+    )
+      return true;
+  });
+};
+
+module.exports = { getUsers, postUser };

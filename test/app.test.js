@@ -55,6 +55,15 @@ describe("app", () => {
             expect(msg).to.equal("missing required field");
           });
       });
+      it(`should have a status 400 with "username taken" on a key of msg when the username is already taken`, () => {
+        return request(app)
+          .post("/api/users")
+          .send({ username: "username1" })
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("username taken");
+          });
+      });
     });
   });
 });
