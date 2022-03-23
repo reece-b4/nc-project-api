@@ -46,6 +46,15 @@ describe("app", () => {
               });
           });
       });
+      it(`should have a status 400 with "missing required field" on a key of msg when the request body is missing a field`, () => {
+        return request(app)
+          .post("/api/users")
+          .send({})
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("missing required field");
+          });
+      });
     });
   });
 });

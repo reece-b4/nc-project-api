@@ -7,6 +7,12 @@ exports.fetchUsers = () => {
 };
 
 exports.addUser = (username) => {
+  if (username === undefined) {
+    return Promise.reject({
+      status: 400,
+      msg: "missing required field",
+    });
+  }
   return projectApi
     .post("/users", {
       fields: {
