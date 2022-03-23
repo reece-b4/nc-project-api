@@ -1,10 +1,7 @@
-const axios = require("axios");
-
-const projectApi = axios.create({
-  baseURL:
-    "https://firestore.googleapis.com/v1/projects/partial-pet-test/databases/(default)/documents",
-});
+const projectApi = require("../db/connection");
 
 exports.fetchUsers = () => {
-  return projectApi.get("/users").then(({ data: { documents } }) => documents);
+  return projectApi.get("/users").then(({ data: { documents } }) => {
+    return documents ? documents : [];
+  });
 };
