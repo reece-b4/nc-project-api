@@ -7,7 +7,7 @@ exports.fetchUsers = () => {
 };
 
 exports.addUser = (username) => {
-  if (username === undefined) {
+  if (!username) {
     return Promise.reject({
       status: 400,
       msg: "missing required field",

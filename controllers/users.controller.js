@@ -16,10 +16,9 @@ const getUsers = (_, res, next) => {
 
 const postUser = (req, res, next) => {
   const username = req.body.username;
-  const usernameTaken = checkUsernameExists(username);
-  return Promise.all([usernameTaken])
-    .then(([usernameTaken]) => {
-      if (usernameTaken) {
+  return checkUsernameExists(username)
+    .then((isUsernameTaken) => {
+      if (isUsernameTaken) {
         return Promise.reject({
           status: 400,
           msg: "username taken",
