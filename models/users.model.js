@@ -12,20 +12,17 @@ exports.fetchUsers = async () => {
   return data;
 };
 
-exports.addUser = (username) => {
-  if (!username) {
-    return Promise.reject({
-      status: 400,
-      msg: "missing required field",
-    });
-  }
-  return db
-    .post("/users", {
-      fields: {
-        username: {
-          stringValue: "newUser",
-        },
+exports.addUser = async (username) => {
+  // if (!username) {
+  //   return Promise.reject({
+  //     status: 400,
+  //     msg: "missing required field",
+  //   });
+  // }
+  const newUser = await db
+    .collection("users").add({
+        username: username 
       },
-    })
-    .then(({ data }) => data);
+    )
+    return newUser.id;
 };

@@ -16,22 +16,17 @@ const getUsers = (_, res, next) => {
 
 const postUser = (req, res, next) => {
   const username = req.body.username;
-  return checkUsernameExists(username)
-    .then((isUsernameTaken) => {
-      if (isUsernameTaken) {
-        return Promise.reject({
-          status: 400,
-          msg: "username taken",
-        });
-      }
-      return addUser(username);
-    })
+  // return checkUsernameExists(username)
+  //   .then((isUsernameTaken) => {
+  //     if (isUsernameTaken) {
+  //       return Promise.reject({
+  //         status: 400,
+  //         msg: "username taken",
+  //       });
+  //     }
+      return addUser(username)
     .then((data) => {
-      const user = {
-        userId: data.name.split("/").pop(),
-        username: data.fields.username.stringValue,
-      };
-      res.status(201).send({ user });
+      res.status(201).send({ user: data });
     })
     .catch(next);
 };
