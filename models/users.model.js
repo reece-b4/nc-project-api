@@ -1,7 +1,7 @@
-const projectApi = require("../db/connection");
+const db = require("../db/connection");
 
 exports.fetchUsers = () => {
-  return projectApi.get("/users").then(({ data: { documents } }) => {
+  return db.get("/users").then(({ data: { documents } }) => {
     return documents ? documents : [];
   });
 };
@@ -13,7 +13,7 @@ exports.addUser = (username) => {
       msg: "missing required field",
     });
   }
-  return projectApi
+  return db
     .post("/users", {
       fields: {
         username: {

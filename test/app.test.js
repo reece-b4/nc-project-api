@@ -1,9 +1,9 @@
-const app = require("../app");
 const { expect } = require("chai");
 
+const app = require("../app");
 const data = require("../db/data");
+const db = require("../db/connection");
 const seed = require("../db/seeds/seed");
-
 const request = require("supertest");
 
 beforeEach(() => seed(data));

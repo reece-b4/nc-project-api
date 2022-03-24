@@ -1,26 +1,41 @@
-const projectApi = require("../connection");
-const { fetchUsers } = require("../../models/users.model");
+const db = require("../connection");
+
+async function deleteCollection(db, collectionPath, batchSize) {
+  const collectionRef = db.collection(collectionPath);
+  const query = collectionRef.orderBy("__name__").limit(batchSize);
+
+  return new Promise((resolve, reject) => {
+    deleteQueryBatch(db, query, resolve).catch(reject);
+  });
+}
+
+async function deleteQueryBatch(db, query, resolve) {
+  const snapshot = await query.get();
+
+  const batchSize = snapshot.size;
+  if (batchSize === 0) {
+    // When there are no documents left, we are done
+    resolve();
+    return;
+  }
+
+  // Delete documents in a batch
+  const batch = db.batch();
+  snapshot.docs.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+  await batch.commit();
+
+  // Recurse on the next process tick, to avoid
+  // exploding the stack.
+  process.nextTick(() => {
+    deleteQueryBatch(db, query, resolve);
+  });
+}
 
 const seed = async ({ userData }) => {
-  // Get list of current userIds and delete them from database
-  let users = await fetchUsers();
-  const userIds = users.map((user) => user.name.split("/").pop());
-
-  // Delete all of the users in the database via their ids
-  await Promise.all(
-    userIds.map(async (userId) => {
-      await projectApi.delete(`/users/${userId}`);
-    })
-  );
-
-  // Post userdata to users
-  await Promise.all(
-    userData.map(async (user) => {
-      await projectApi.post("/users", {
-        fields: { username: { stringValue: user.username } },
-      });
-    })
-  );
+  // Delete collection
+  await deleteCollection(db, "users", 10);
 };
 
 module.exports = seed;
