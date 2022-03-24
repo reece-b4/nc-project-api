@@ -38,9 +38,9 @@ const seed = async ({ userData }) => {
   await deleteCollection(db, "users", 10);
 
   // Iterate through userData adding each user to the db
-  await Promise.all(
+  return Promise.all(
     userData.map((user, index) => {
-      db.collection("users").doc(`user${index}`).set({
+      return db.collection("users").doc(`user${index}`).set({
         username: user.username,
       });
     })

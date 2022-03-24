@@ -26,8 +26,8 @@ describe("app", () => {
           });
       });
     });
-    describe("POST", () => {
-      it.only(`should have a status of 201 and return a new user object under
+    describe.only("POST", () => {
+      it(`should have a status of 201 and return a new user object under
       the key of user`, () => {
         return request(app)
           .post("/api/users")
