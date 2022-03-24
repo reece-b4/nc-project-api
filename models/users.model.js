@@ -24,3 +24,8 @@ exports.fetchUserByUserId = async (userId) => {
   const doc = await db.collection("users").doc(userId).get();
   return { userId: doc.id, info: doc.data() };
 };
+
+exports.removeUserByUserId = async (userId) => {
+  const doc = await db.collection("users").doc(userId).delete();
+  return doc;
+};

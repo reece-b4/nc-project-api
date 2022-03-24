@@ -78,5 +78,18 @@ describe("app", () => {
           });
       });
     });
+    describe("DELETE", () => {
+      it(`should have a status of 204 and the specified user should be removed from db`, () => {
+        return request(app)
+          .delete("/api/users/user4")
+          .expect(204)
+          .then(() => {
+            return request(app).get("/api/users").expect(200);
+          })
+          .then(({ body: { users } }) => {
+            expect(users).to.have.lengthOf(4);
+          });
+      });
+    });
   });
 });

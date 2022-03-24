@@ -2,6 +2,7 @@ const {
   fetchUsers,
   addUser,
   fetchUserByUserId,
+  removeUserByUserId,
 } = require("../models/users.model");
 const { isUsernameTaken } = require("../db/utils/utils");
 
@@ -42,6 +43,15 @@ exports.getUserByUserId = (req, res, next) => {
     .then((data) => {
       const user = { userId: data.userId, ...data.info };
       res.status(200).send({ user });
+    })
+    .catch(next);
+};
+
+exports.deleteUserByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  return removeUserByUserId(userId)
+    .then(() => {
+      res.status(204).send();
     })
     .catch(next);
 };
