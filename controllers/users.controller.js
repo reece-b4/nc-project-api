@@ -4,7 +4,7 @@ const {
   fetchUserByUserId,
   removeUserByUserId,
 } = require("../models/users.model");
-const { isUsernameTaken } = require("../db/utils/utils");
+const { isUsernameTaken, isUserIdPresent } = require("../db/utils/utils");
 
 exports.getUsers = (_, res, next) => {
   fetchUsers()
@@ -49,7 +49,12 @@ exports.getUserByUserId = (req, res, next) => {
 
 exports.deleteUserByUserId = (req, res, next) => {
   const userId = req.params.userId;
-  return removeUserByUserId(userId)
+  return isUserIdPresent(userId)
+    .then((isIdPresent) => {
+      if (!isIdPresent)
+        return Promise.reject({ status: 404, msg: "no user with that userId" });
+      return removeUserByUserId(userId);
+    })
     .then(() => {
       res.status(204).send();
     })

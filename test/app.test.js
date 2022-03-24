@@ -90,6 +90,15 @@ describe("app", () => {
             expect(users).to.have.lengthOf(4);
           });
       });
+      it(`should have a status of 404 with 'no user with that userId' under a key of msg
+          when the :userId doesn't exist in the databse`, () => {
+        return request(app)
+          .delete("/api/users/user999")
+          .expect(404)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("no user with that userId");
+          });
+      });
     });
   });
 });
