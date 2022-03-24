@@ -1,9 +1,15 @@
 const db = require("../db/connection");
+const { userData } = require("../db/data");
 
-exports.fetchUsers = () => {
-  return db.get("/users").then(({ data: { documents } }) => {
-    return documents ? documents : [];
+exports.fetchUsers = async () => {
+  const users = db.collection("users");
+  const snapshot = await users.get();
+  data = [];
+  snapshot.forEach((doc) => {
+    data.push([doc.id, doc.data()]);
   });
+
+  return data;
 };
 
 exports.addUser = (username) => {

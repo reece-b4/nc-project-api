@@ -36,6 +36,15 @@ async function deleteQueryBatch(db, query, resolve) {
 const seed = async ({ userData }) => {
   // Delete collection
   await deleteCollection(db, "users", 10);
+
+  // Iterate through userData adding each user to the db
+  await Promise.all(
+    userData.map((user, index) => {
+      db.collection("users").doc(`user${index}`).set({
+        username: user.username,
+      });
+    })
+  );
 };
 
 module.exports = seed;

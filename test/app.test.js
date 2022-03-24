@@ -6,7 +6,7 @@ const db = require("../db/connection");
 const seed = require("../db/seeds/seed");
 const request = require("supertest");
 
-beforeEach(() => seed(data));
+// beforeEach(() => seed(data));
 
 describe("app", () => {
   describe("/users", () => {
@@ -18,7 +18,7 @@ describe("app", () => {
           .get("/api/users")
           .expect(200)
           .then(({ body: { users } }) => {
-            expect(users).to.have.lengthOf(3);
+            expect(users).to.have.lengthOf(5);
             users.forEach((user) => {
               expect(user.userId).to.be.a("string");
               expect(user.username).to.be.a("string");
@@ -42,7 +42,7 @@ describe("app", () => {
               .get("/api/users")
               .expect(200)
               .then(({ body: { users } }) => {
-                expect(users).to.have.lengthOf(4);
+                expect(users).to.have.lengthOf(6);
               });
           });
       });

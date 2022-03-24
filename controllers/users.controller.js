@@ -5,8 +5,8 @@ const getUsers = (_, res, next) => {
     .then((data) => {
       const users = data.map((user) => {
         return {
-          userId: user.name.split("/").pop(),
-          username: user.fields.username.stringValue,
+          userId: user[0],
+          username: user[1].username,
         };
       });
       res.status(200).send({ users });
