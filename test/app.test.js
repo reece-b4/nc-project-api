@@ -26,5 +26,44 @@ describe("app", () => {
           });
       });
     });
+    describe("POST", () => {
+      it(`should have a status of 201 and return a new user object under
+      the key of user`, () => {
+        return request(app)
+          .post("/api/users")
+          .send({ username: "newUser" })
+          .expect(201)
+          .then(({ body: { user } }) => {
+            expect(user.userId).to.be.a("string");
+            expect(user.username).to.be.a("string");
+          })
+          .then(() => {
+            return request(app)
+              .get("/api/users")
+              .expect(200)
+              .then(({ body: { users } }) => {
+                expect(users).to.have.lengthOf(4);
+              });
+          });
+      });
+      it(`should have a status 400 with "missing required field" on a key of msg when the request body is missing a field`, () => {
+        return request(app)
+          .post("/api/users")
+          .send({})
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("missing required field");
+          });
+      });
+      it(`should have a status 400 with "username taken" on a key of msg when the username is already taken`, () => {
+        return request(app)
+          .post("/api/users")
+          .send({ username: "username1" })
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("username taken");
+          });
+      });
+    });
   });
 });
