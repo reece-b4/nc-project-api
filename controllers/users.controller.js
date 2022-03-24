@@ -3,6 +3,7 @@ const {
   addUser,
   fetchUserByUserId,
   removeUserByUserId,
+  updateUserByUserId,
 } = require("../models/users.model");
 const { isUsernameTaken, isUserIdPresent } = require("../db/utils/utils");
 
@@ -57,6 +58,19 @@ exports.deleteUserByUserId = (req, res, next) => {
     })
     .then(() => {
       res.status(204).send();
+    })
+    .catch(next);
+};
+
+exports.patchUserByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  return isUserIdPresent(userId)
+    .then((isIdPresent) => {
+      if (!isIdPresent)
+        return Promise.reject({ status: 404, msg: "no user with that userId" });
+      return updateUserByUserId(userId, req.body).then(() => {
+        res.status(200).send();
+      });
     })
     .catch(next);
 };

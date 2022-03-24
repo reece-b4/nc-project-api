@@ -67,7 +67,7 @@ describe("app", () => {
     });
   });
 
-  describe.only("/users/:userId", () => {
+  describe("/users/:userId", () => {
     describe("GET", () => {
       it("should have a status 200 with the requested user object on a key of user", () => {
         return request(app)
@@ -90,10 +90,27 @@ describe("app", () => {
             expect(users).to.have.lengthOf(4);
           });
       });
-      it(`should have a status of 404 with 'no user with that userId' under a key of msg
+      it(`should have a status of 404 with 'no user with that userId' on a key of msg
           when the :userId doesn't exist in the databse`, () => {
         return request(app)
           .delete("/api/users/user999")
+          .expect(404)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("no user with that userId");
+          });
+      });
+    });
+    describe("PATCH", () => {
+      it(`should have a status of 200`, () => {
+        return request(app)
+          .patch("/api/users/user0")
+          .send({ username: "updatedUsername" })
+          .expect(200);
+      });
+      it(`should have a status of 404 with 'no user with that userId' on a key of msg
+          when the :userId doesn't exist in the databse`, () => {
+        return request(app)
+          .patch("/api/users/user999")
           .expect(404)
           .then(({ body: { msg } }) => {
             expect(msg).to.equal("no user with that userId");
