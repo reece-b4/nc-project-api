@@ -1,11 +1,11 @@
-const axios = require("axios");
+const fs = require("firebase-admin");
 
-require("dotenv").config({
-  path: `${__dirname}/../.env.test`,
+const serviceAccount = require("../serviceAccountKey.json");
+
+fs.initializeApp({
+  credential: fs.credential.cert(serviceAccount),
 });
 
-const projectApi = axios.create({
-  baseURL: process.env.BASEURL,
-});
+const db = fs.firestore();
 
-module.exports = projectApi;
+module.exports = db;
