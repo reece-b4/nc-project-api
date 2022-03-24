@@ -1,4 +1,8 @@
-const { fetchUsers, addUser } = require("../models/users.model");
+const {
+  fetchUsers,
+  addUser,
+  fetchUserByUserId,
+} = require("../models/users.model");
 const { isUsernameTaken } = require("../db/utils/utils");
 
 exports.getUsers = (_, res, next) => {
@@ -7,7 +11,7 @@ exports.getUsers = (_, res, next) => {
       const users = data.map((user) => {
         return {
           userId: user.userId,
-          username: user.info.username,
+          ...user.info,
         };
       });
       res.status(200).send({ users });
@@ -26,8 +30,18 @@ exports.postUser = (req, res, next) => {
         });
       return addUser(username);
     })
+    .then((user) => {
+      res.status(201).send({ user });
+    })
+    .catch(next);
+};
+
+exports.getUserByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  return fetchUserByUserId(userId)
     .then((data) => {
-      res.status(201).send({ user: data });
+      const user = { userId: data.userId, ...data.info };
+      res.status(200).send({ user });
     })
     .catch(next);
 };
