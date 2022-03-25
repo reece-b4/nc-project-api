@@ -118,4 +118,27 @@ describe("app", () => {
       });
     });
   });
+  describe.only("/pets", () => {
+    describe("GET", () => {
+      it(`should have a status of 200 and return a list of all pets on
+          a key of 'pets'. Each pet is an object containing string values
+          under the keys of 'petId', 'name', 'species', 'desc' and 'img'
+          as well as an int on the key of age`, () => {
+        return request(app)
+          .get("/api/pets")
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.have.lengthOf(5);
+            pets.forEach((pet) => {
+              expect(pet.petId).to.be.a("string");
+              expect(pet.name).to.be.a("string");
+              expect(pet.species).to.be.a("string");
+              expect(pet.desc).to.be.a("string");
+              expect(pet.img).to.be.a("string");
+              expect(pet.age).to.be.a("number");
+            });
+          });
+      });
+    });
+  });
 });
