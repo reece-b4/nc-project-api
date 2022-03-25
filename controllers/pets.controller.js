@@ -1,7 +1,8 @@
 const { fetchPets } = require("../models/pets.model");
 
-exports.getPets = (_, res, next) => {
-  fetchPets()
+exports.getPets = (req, res, next) => {
+  const {species} = req.query;
+  fetchPets(species)
     .then((data) => {
       const pets = data.map((pet) => {
         return {

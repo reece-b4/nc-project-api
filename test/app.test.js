@@ -4,6 +4,7 @@ const app = require("../app");
 const data = require("../db/data");
 const seed = require("../db/seeds/seed");
 const request = require("supertest");
+const petsRouter = require("../routes/pets-router");
 
 beforeEach(() => seed(data));
 
@@ -118,7 +119,7 @@ describe("app", () => {
       });
     });
   });
-  describe.only("/pets", () => {
+  describe("/pets", () => {
     describe("GET", () => {
       it(`should have a status of 200 and return a list of all pets on
           a key of 'pets'. Each pet is an object containing string values
@@ -139,6 +140,17 @@ describe("app", () => {
             });
           });
       });
+      it(`should have a status of 200 and return a filtered list of pets by species`, () => {
+        return request(app)
+        .get("/api/pets?species=species0")
+        .expect(200)
+        .then(({body:{pets}}) => {
+          expect(pets).to.have.lengthOf(2);
+          pets.forEach((pet)=>{
+            expect(pet.species).to.equal("species0");
+          })
+        })
+      })
     });
   });
 });
