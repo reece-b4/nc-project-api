@@ -11,3 +11,8 @@ exports.fetchPets = async (species) => {
 
   return data;
 };
+
+exports.fetchPetById = async (petId) => {
+  let doc = await db.collection("pets").doc(petId).get();
+  return { petId: doc.id, info: doc.data() };
+};

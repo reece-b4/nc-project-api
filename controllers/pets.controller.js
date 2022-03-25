@@ -1,4 +1,4 @@
-const { fetchPets } = require("../models/pets.model");
+const { fetchPets, fetchPetById } = require("../models/pets.model");
 
 const {
   getUserLatLongByUserId,
@@ -31,6 +31,16 @@ exports.getPets = (req, res, next) => {
 
       pets.sort((a, b) => a.distance - b.distance);
       res.status(200).send({ pets });
+    })
+    .catch(next);
+};
+
+exports.getPetById = (req, res, next) => {
+  const { petId } = req.params;
+  return fetchPetById(petId)
+    .then((data) => {
+      const pet = { petId: data.petId, ...data.info};
+      res.status(200).send({ pet });
     })
     .catch(next);
 };
