@@ -33,3 +33,7 @@ exports.removeUserByUserId = async (userId) => {
 exports.updateUserByUserId = async (userId, updatedFields) => {
   return await db.collection("users").doc(userId).update(updatedFields);
 };
+
+exports.addPetByUserId = async (userId, newPetInfo) => {
+  return await db.collection("pets").add(newPetInfo);
+};

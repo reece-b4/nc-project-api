@@ -3,10 +3,10 @@ const { expect } = chai;
 chai.use(require("chai-sorted"));
 
 const app = require("../app");
-const { calculateDistance } = require("../db/utils/utils");
 const data = require("../db/data");
 const request = require("supertest");
 const seed = require("../db/seeds/seed");
+const { getPets } = require("../controllers/pets.controller");
 
 beforeEach(() => seed(data));
 
@@ -184,12 +184,11 @@ describe("app", () => {
   });
 });
 
-
 describe("/users/:userId/pets", () => {
   describe("POST", () => {
-    it("should have status 201", () => {
+    it.only("should have status 201", () => {
       return request(app)
-        .post("/api/pets")
+        .post("/api/users/user1/pets")
         .send({
           name: "newPet",
           age: 1,
@@ -199,10 +198,16 @@ describe("/users/:userId/pets", () => {
           lat: 11,
           long: 25,
           desc: "any desc",
-          funFact: "fun"
-        }).expect(201).then(() => {
-          fetchpets
-        });
+          funFact: "fun",
+        })
+        .expect(201);
+      // .then(() => {
+      //   getPets();
+      // })
+      // .then(({ body: { pets } }) => {
+      //   console.log(pets);
+      //   expect(pets).to.have.lengthOf(6);
+      // });
     });
   });
 });

@@ -4,6 +4,7 @@ const {
   fetchUserByUserId,
   removeUserByUserId,
   updateUserByUserId,
+  addPetByUserId,
 } = require("../models/users.model");
 const { isUsernameTaken, isUserIdPresent } = require("../db/utils/utils");
 
@@ -73,4 +74,13 @@ exports.patchUserByUserId = (req, res, next) => {
       });
     })
     .catch(next);
+};
+
+exports.postPetByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  return addPetByUserId(userId, req.body)
+    .then(() => {
+      res.status(201).send();
+    })
+    .catch(console.log);
 };
