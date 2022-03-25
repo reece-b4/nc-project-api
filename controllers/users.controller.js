@@ -1,5 +1,11 @@
-const { fetchUsers, addUser } = require("../models/users.model");
-const { isUsernameTaken } = require("../db/utils/utils");
+const {
+  fetchUsers,
+  addUser,
+  fetchUserByUserId,
+  removeUserByUserId,
+  updateUserByUserId,
+} = require("../models/users.model");
+const { isUsernameTaken, isUserIdPresent } = require("../db/utils/utils");
 
 exports.getUsers = (_, res, next) => {
   fetchUsers()
@@ -7,7 +13,7 @@ exports.getUsers = (_, res, next) => {
       const users = data.map((user) => {
         return {
           userId: user.userId,
-          username: user.info.username,
+          ...user.info,
         };
       });
       res.status(200).send({ users });
@@ -26,8 +32,45 @@ exports.postUser = (req, res, next) => {
         });
       return addUser(username);
     })
+    .then((user) => {
+      res.status(201).send({ user });
+    })
+    .catch(next);
+};
+
+exports.getUserByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  return fetchUserByUserId(userId)
     .then((data) => {
-      res.status(201).send({ user: data });
+      const user = { userId: data.userId, ...data.info };
+      res.status(200).send({ user });
+    })
+    .catch(next);
+};
+
+exports.deleteUserByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  return isUserIdPresent(userId)
+    .then((isIdPresent) => {
+      if (!isIdPresent)
+        return Promise.reject({ status: 404, msg: "no user with that userId" });
+      return removeUserByUserId(userId);
+    })
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch(next);
+};
+
+exports.patchUserByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  return isUserIdPresent(userId)
+    .then((isIdPresent) => {
+      if (!isIdPresent)
+        return Promise.reject({ status: 404, msg: "no user with that userId" });
+      return updateUserByUserId(userId, req.body).then(() => {
+        res.status(200).send();
+      });
     })
     .catch(next);
 };
