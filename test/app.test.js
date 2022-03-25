@@ -168,6 +168,18 @@ describe("app", () => {
             expect(pets).to.be.sortedBy("distance");
           });
       });
+      it(`should have status 200 and can set max distance via a query`, () => {
+        return request(app)
+          .get("/api/pets?limit=20")
+          .send({ userId: "user0" })
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.have.lengthOf(3);
+            pets.forEach((pet) => {
+              expect(pet.distance).to.be.lte(20);
+            });
+          });
+      });
     });
   });
 });
