@@ -15,4 +15,6 @@ usersRouter
   .delete(deleteUserByUserId)
   .patch(patchUserByUserId);
 
+usersRouter.route("/:userId/pets");
+
 module.exports = usersRouter;

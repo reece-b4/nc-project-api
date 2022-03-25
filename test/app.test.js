@@ -119,3 +119,26 @@ describe("app", () => {
     });
   });
 });
+
+
+describe("/users/:userId/pets", () => {
+  describe("POST", () => {
+    it("should have status 201", () => {
+      return request(app)
+        .post("/api/pets")
+        .send({
+          name: "newPet",
+          age: 1,
+          species: "someSpecies",
+          breed: "someBreed",
+          image: "imageLink",
+          lat: 11,
+          long: 25,
+          desc: "any desc",
+          funFact: "fun"
+        }).expect(201).then(() => {
+          fetchpets
+        });
+    });
+  });
+});
