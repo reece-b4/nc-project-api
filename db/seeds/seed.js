@@ -40,12 +40,10 @@ const seed = async ({ userData, petData }) => {
   // Iterate through userData adding each user to the db
   await Promise.all(
     userData.map((user, index) => {
-      return db.collection("users").doc(`user${index}`).set({
-        username: user.username,
-        lat: user.lat,
-        long: user.long,
-        pets: user.pets,
-      });
+      return db
+        .collection("users")
+        .doc(`user${index}`)
+        .set({ ...user });
     })
   );
 
@@ -54,15 +52,10 @@ const seed = async ({ userData, petData }) => {
 
   await Promise.all(
     petData.map((pet, index) => {
-      return db.collection("pets").doc(`pet${index}`).set({
-        name: pet.name,
-        species: pet.species,
-        desc: pet.desc,
-        img: pet.img,
-        age: pet.age,
-        lat: pet.lat,
-        long: pet.long,
-      });
+      return db
+        .collection("pets")
+        .doc(`pet${index}`)
+        .set({ ...pet });
     })
   );
 };

@@ -1,6 +1,6 @@
 module.exports = [
   {
-    owner: "owner0",
+    owner: "owner2",
     name: "pet0",
     species: "species0",
     desc: "pet0 desc",
@@ -30,7 +30,7 @@ module.exports = [
     long: 51.802001,
   },
   {
-    owner: "owner1",
+    owner: "owner4",
     name: "pet3",
     species: "species2",
     desc: "pet3 desc",
