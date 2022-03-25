@@ -24,6 +24,8 @@ describe("app", () => {
             users.forEach((user) => {
               expect(user.userId).to.be.a("string");
               expect(user.username).to.be.a("string");
+              expect(user.lat).to.be.a("number");
+              expect(user.long).to.be.a("number");
             });
           });
       });
