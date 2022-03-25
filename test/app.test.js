@@ -183,38 +183,38 @@ describe("app", () => {
       });
     });
   });
-});
 
-describe("/users/:userId/pets", () => {
-  describe("POST", () => {
-    it("should have status 201 and a pet should be added to the pet collection and under the users pet array", () => {
-      return request(app)
-        .post("/api/users/user1/pets")
-        .send({
-          owner: "user1",
-          name: "newPet",
-          age: 1,
-          species: "someSpecies",
-          breed: "someBreed",
-          img: "imageLink",
-          lat: 11,
-          long: 25,
-          desc: "any desc",
-          funFact: "fun",
-        })
-        .expect(201)
-        .then(() => {
-          return fetchPets();
-        })
-        .then((pets) => {
-          expect(pets).to.have.lengthOf(6);
-          expect(pets.some((pet) => pet.info.name === "newPet")).to.be.true;
+  describe("/users/:userId/pets", () => {
+    describe("POST", () => {
+      it("should have status 201 and a pet should be added to the pet collection and under the users pet array", () => {
+        return request(app)
+          .post("/api/users/user1/pets")
+          .send({
+            owner: "user1",
+            name: "newPet",
+            age: 1,
+            species: "someSpecies",
+            breed: "someBreed",
+            img: "imageLink",
+            lat: 11,
+            long: 25,
+            desc: "any desc",
+            funFact: "fun",
+          })
+          .expect(201)
+          .then(() => {
+            return fetchPets();
+          })
+          .then((pets) => {
+            expect(pets).to.have.lengthOf(6);
+            expect(pets.some((pet) => pet.info.name === "newPet")).to.be.true;
 
-          return fetchUserByUserId("user1");
-        })
-        .then((user) => {
-          expect(user.info.pets).to.have.lengthOf(2);
-        });
+            return fetchUserByUserId("user1");
+          })
+          .then((user) => {
+            expect(user.info.pets).to.have.lengthOf(2);
+          });
+      });
     });
   });
 });
