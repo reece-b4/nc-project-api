@@ -5,6 +5,8 @@ module.exports = [
     desc: "pet0 desc",
     img: "https://img.com",
     age: 1,
+    lat: -1.069876,
+    long: 51.6562,
   },
   {
     name: "pet1",
@@ -12,6 +14,8 @@ module.exports = [
     desc: "pet1 desc",
     img: "https://img.com",
     age: 2,
+    lat: -1.274185,
+    long: 51.807033,
   },
   {
     name: "pet2",
@@ -19,6 +23,8 @@ module.exports = [
     desc: "pet2 desc",
     img: "https://img.com",
     age: 3,
+    lat: -1.295171,
+    long: 51.802001,
   },
   {
     name: "pet3",
@@ -26,6 +32,8 @@ module.exports = [
     desc: "pet3 desc",
     img: "https://img.com",
     age: 10,
+    lat: -1.563199,
+    long: 53.802333,
   },
   {
     name: "pet4",
@@ -33,5 +41,7 @@ module.exports = [
     desc: "pet4 desc",
     img: "https://img.com",
     age: 5,
+    lat: -2.243549,
+    long: 53.476005,
   },
 ];

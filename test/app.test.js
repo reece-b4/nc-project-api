@@ -1,10 +1,12 @@
-const { expect } = require("chai");
+const chai = require("chai");
+const { expect } = chai;
+chai.use(require("chai-sorted"));
 
 const app = require("../app");
+const { calculateDistance } = require("../db/utils/utils");
 const data = require("../db/data");
-const seed = require("../db/seeds/seed");
 const request = require("supertest");
-const petsRouter = require("../routes/pets-router");
+const seed = require("../db/seeds/seed");
 
 beforeEach(() => seed(data));
 
@@ -22,6 +24,8 @@ describe("app", () => {
             users.forEach((user) => {
               expect(user.userId).to.be.a("string");
               expect(user.username).to.be.a("string");
+              expect(user.lat).to.be.a("number");
+              expect(user.long).to.be.a("number");
             });
           });
       });
@@ -124,9 +128,10 @@ describe("app", () => {
       it(`should have a status of 200 and return a list of all pets on
           a key of 'pets'. Each pet is an object containing string values
           under the keys of 'petId', 'name', 'species', 'desc' and 'img'
-          as well as an int on the key of age`, () => {
+          as well as an int on the key of age, lat and long`, () => {
         return request(app)
           .get("/api/pets")
+          .send({ userId: "user0" })
           .expect(200)
           .then(({ body: { pets } }) => {
             expect(pets).to.have.lengthOf(5);
@@ -137,12 +142,15 @@ describe("app", () => {
               expect(pet.desc).to.be.a("string");
               expect(pet.img).to.be.a("string");
               expect(pet.age).to.be.a("number");
+              expect(pet.lat).to.be.a("number");
+              expect(pet.long).to.be.a("number");
             });
           });
       });
       it(`should have a status of 200 and return a filtered list of pets by species`, () => {
         return request(app)
           .get("/api/pets?species=species0")
+          .send({ userId: "user0" })
           .expect(200)
           .then(({ body: { pets } }) => {
             expect(pets).to.have.lengthOf(2);
@@ -151,26 +159,45 @@ describe("app", () => {
             });
           });
       });
+      it(`should have a status of 200 and be ordered by distance from user`, () => {
+        return request(app)
+          .get("/api/pets")
+          .send({ userId: "user0" })
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.be.sortedBy("distance");
+          });
+      });
+      it(`should have status 200 and can set max distance via a query`, () => {
+        return request(app)
+          .get("/api/pets?limit=20")
+          .send({ userId: "user0" })
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.have.lengthOf(3);
+            pets.forEach((pet) => {
+              expect(pet.distance).to.be.lte(20);
+            });
+          });
+      });
     });
   });
-  describe("/pet", () => {
+  describe("/pets/:petId", () => {
     describe("GET", () => {
-      it.only(`should have status of 200 and return pet object with string values under the keys of 'petId', 'name', 'species', 'desc' and 'img'
-      as well as an int on the key of age `, () => {
+      it(`should have status of 200 and return pet object with string values under the keys of 'petId', 'name', 'species', 'desc' and 'img'
+    as well as an int on the key of age `, () => {
         return request(app)
           .get("/api/pets/pet0")
           .expect(200)
           .then(({ body: { pet } }) => {
-            expect(pet).to.equal({
-              age: 1,
-              desc: "pet0 desc",
-              img: "https://img.com",
-              lat: -1.069876,
-              long: 51.6562,
-              name: "pet0",
-              species: "species0",
-              petId: "pet0",
-            });
+            expect(pet.petId).to.equal("pet0");
+            expect(pet.age).to.equal(1);
+            expect(pet.desc).to.equal("pet0 desc");
+            expect(pet.img).to.equal("https://img.com");
+            expect(pet.lat).to.equal(-1.069876);
+            expect(pet.long).to.equal(51.6562);
+            expect(pet.name).to.equal("pet0");
+            expect(pet.species).to.equal("species0");
           });
       });
     });

@@ -42,6 +42,8 @@ const seed = async ({ userData, petData }) => {
     userData.map((user, index) => {
       return db.collection("users").doc(`user${index}`).set({
         username: user.username,
+        lat: user.lat,
+        long: user.long,
       });
     })
   );
@@ -57,6 +59,8 @@ const seed = async ({ userData, petData }) => {
         desc: pet.desc,
         img: pet.img,
         age: pet.age,
+        lat: pet.lat,
+        long: pet.long,
       });
     })
   );
