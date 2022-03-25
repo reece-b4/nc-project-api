@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/IanFindlay/nc-project-api#readme",
   "dependencies": {
+    "axios": "^0.26.1",
     "chai": "^4.3.6",
     "chai-sorted": "^0.2.0",
     "dotenv": "^16.0.0",

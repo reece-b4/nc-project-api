@@ -6,7 +6,11 @@ const {
   updateUserByUserId,
   addPetByUserId,
 } = require("../models/users.model");
-const { isUsernameTaken, isUserIdPresent } = require("../db/utils/utils");
+const {
+  isUsernameTaken,
+  isUserIdPresent,
+  getLatLongFromPostcode,
+} = require("../db/utils/utils");
 
 exports.getUsers = (_, res, next) => {
   fetchUsers()
@@ -31,10 +35,18 @@ exports.postUser = (req, res, next) => {
           status: 400,
           msg: "username taken",
         });
-      return addUser(username);
+      if (!req.body.username || !req.body.postcode)
+        return Promise.reject({
+          status: 400,
+          msg: "missing required field",
+        });
+      return getLatLongFromPostcode(req.body.postcode);
     })
-    .then((user) => {
-      res.status(201).send({ user });
+    .then(({ lat, long }) => {
+      return addUser(lat, long, req.body);
+    })
+    .then((userId) => {
+      res.status(201).send({ userId });
     })
     .catch(next);
 };
