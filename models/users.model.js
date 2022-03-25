@@ -12,12 +12,11 @@ exports.fetchUsers = async () => {
   return data;
 };
 
-exports.addUser = async (username) => {
-  if (!username)
-    return Promise.reject({ status: 400, msg: "missing required field" });
-  const newUser = await db.collection("users").add({
-    username: username,
-  });
+exports.addUser = async (lat, long, userInfo) => {
+  userInfo.lat = lat;
+  userInfo.long = long;
+  delete userInfo.postcode;
+  const newUser = await db.collection("users").add(userInfo);
   return newUser.id;
 };
 

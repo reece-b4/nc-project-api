@@ -1,4 +1,5 @@
-const db = require("../connection");
+const axios = require("axios");
+
 const { fetchUsers, fetchUserByUserId } = require("../../models/users.model");
 
 exports.isUsernameTaken = async (username) => {
@@ -29,4 +30,12 @@ exports.calculateDistance = (lat1, lon1, lat2, lon2) => {
   dist = (dist * 180) / Math.PI;
   dist = dist * 60 * 1.1515;
   return dist;
+};
+
+exports.getLatLongFromPostcode = (postcode) => {
+  return axios
+    .get(`https://api.postcodes.io/postcodes/${postcode}`)
+    .then(({ data: { result } }) => {
+      return { lat: result.latitude, long: result.longitude };
+    });
 };
