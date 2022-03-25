@@ -1,10 +1,12 @@
-const { expect } = require("chai");
+const chai = require("chai");
+const { expect } = chai;
+chai.use(require("chai-sorted"));
 
 const app = require("../app");
+const { calculateDistance } = require("../db/utils/utils");
 const data = require("../db/data");
-const seed = require("../db/seeds/seed");
 const request = require("supertest");
-const petsRouter = require("../routes/pets-router");
+const seed = require("../db/seeds/seed");
 
 beforeEach(() => seed(data));
 
@@ -124,9 +126,10 @@ describe("app", () => {
       it(`should have a status of 200 and return a list of all pets on
           a key of 'pets'. Each pet is an object containing string values
           under the keys of 'petId', 'name', 'species', 'desc' and 'img'
-          as well as an int on the key of age`, () => {
+          as well as an int on the key of age, lat and long`, () => {
         return request(app)
           .get("/api/pets")
+          .send({ userId: "user0" })
           .expect(200)
           .then(({ body: { pets } }) => {
             expect(pets).to.have.lengthOf(5);
@@ -137,20 +140,32 @@ describe("app", () => {
               expect(pet.desc).to.be.a("string");
               expect(pet.img).to.be.a("string");
               expect(pet.age).to.be.a("number");
+              expect(pet.lat).to.be.a("number");
+              expect(pet.long).to.be.a("number");
             });
           });
       });
       it(`should have a status of 200 and return a filtered list of pets by species`, () => {
         return request(app)
-        .get("/api/pets?species=species0")
-        .expect(200)
-        .then(({body:{pets}}) => {
-          expect(pets).to.have.lengthOf(2);
-          pets.forEach((pet)=>{
-            expect(pet.species).to.equal("species0");
-          })
-        })
-      })
+          .get("/api/pets?species=species0")
+          .send({ userId: "user0" })
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.have.lengthOf(2);
+            pets.forEach((pet) => {
+              expect(pet.species).to.equal("species0");
+            });
+          });
+      });
+      it(`should have a status of 200 and be ordered by distance from user`, () => {
+        return request(app)
+          .get("/api/pets")
+          .send({ userId: "user0" })
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.be.sortedBy("distance");
+          });
+      });
     });
   });
 });

@@ -2,7 +2,7 @@ const db = require("../db/connection");
 
 exports.fetchPets = async (species) => {
   let pets = db.collection("pets");
-  if (species) pets = pets.where("species", "==", species)
+  if (species) pets = pets.where("species", "==", species);
   const snapshot = await pets.get();
   data = [];
   snapshot.forEach((doc) => {
