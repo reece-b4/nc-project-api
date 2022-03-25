@@ -19,6 +19,7 @@
   "homepage": "https://github.com/IanFindlay/nc-project-api#readme",
   "dependencies": {
     "chai": "^4.3.6",
+    "chai-sorted": "^0.2.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "firebase-admin": "^10.0.2"
