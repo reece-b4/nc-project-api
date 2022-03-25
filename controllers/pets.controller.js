@@ -1,4 +1,8 @@
-const { fetchPets, fetchPetById } = require("../models/pets.model");
+const {
+  fetchPets,
+  fetchPetById,
+  removePetById,
+} = require("../models/pets.model");
 
 const {
   getUserLatLongByUserId,
@@ -39,8 +43,18 @@ exports.getPetById = (req, res, next) => {
   const { petId } = req.params;
   return fetchPetById(petId)
     .then((data) => {
-      const pet = { petId: data.petId, ...data.info};
+      const pet = { petId: data.petId, ...data.info };
       res.status(200).send({ pet });
+    })
+    .catch(next);
+};
+
+exports.deletePetById = (req, res, next) => {
+  const { petId } = req.params;
+  const { userId } = req.body;
+  return removePetById(petId, userId)
+    .then(() => {
+      res.status(204).send();
     })
     .catch(next);
 };

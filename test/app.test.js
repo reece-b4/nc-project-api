@@ -185,7 +185,8 @@ describe("app", () => {
   });
   describe("/users/:userId/pets", () => {
     describe("POST", () => {
-      it("should have status 201 and a pet should be added to the pet collection and under the users pet array", () => {
+      it(`should have status 201 and a pet should be added to the pet collection
+          and under the users pet array`, () => {
         return request(app)
           .post("/api/users/user1/pets")
           .send({
@@ -218,7 +219,8 @@ describe("app", () => {
   });
   describe("/pets/:petId", () => {
     describe("GET", () => {
-      it(`should have status of 200 and return pet object with string values under the keys of 'petId', 'name', 'species', 'desc' and 'img'
+      it(`should have status of 200 and return pet object with string values under the keys of
+         'petId', 'name', 'species', 'desc' and 'img'
     as well as an int on the key of age `, () => {
         return request(app)
           .get("/api/pets/pet0")
@@ -236,12 +238,23 @@ describe("app", () => {
       });
     });
     describe("DELETE", () => {
-      it(`should have a status of 204 and delete pet by its id`, () => {
+      it(`should have a status of 204 and delete pet by its id in both the pets collection
+          and under the relevant users' pets array`, () => {
         return request(app)
           .delete("/api/pets/pet0")
+          .send({ userId: "user2" })
           .expect(204)
-          .then(({ body }) => {
-            expect(body).to.equal({});
+          .then(() => {
+            return fetchPets();
+          })
+          .then((pets) => {
+            expect(pets).to.have.lengthOf(4);
+
+            return fetchUserByUserId("user2");
+          })
+          .then((user) => {
+            expect(user.info.pets).to.have.lengthOf(1);
+            expect(user.info.pets[0].petId).to.equal("notRemoved");
           });
       });
     });
