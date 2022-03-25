@@ -142,15 +142,37 @@ describe("app", () => {
       });
       it(`should have a status of 200 and return a filtered list of pets by species`, () => {
         return request(app)
-        .get("/api/pets?species=species0")
-        .expect(200)
-        .then(({body:{pets}}) => {
-          expect(pets).to.have.lengthOf(2);
-          pets.forEach((pet)=>{
-            expect(pet.species).to.equal("species0");
-          })
-        })
-      })
+          .get("/api/pets?species=species0")
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.have.lengthOf(2);
+            pets.forEach((pet) => {
+              expect(pet.species).to.equal("species0");
+            });
+          });
+      });
+    });
+  });
+  describe("/pet", () => {
+    describe("GET", () => {
+      it.only(`should have status of 200 and return pet object with string values under the keys of 'petId', 'name', 'species', 'desc' and 'img'
+      as well as an int on the key of age `, () => {
+        return request(app)
+          .get("/api/pets/pet0")
+          .expect(200)
+          .then(({ body: { pet } }) => {
+            expect(pet).to.equal({
+              age: 1,
+              desc: "pet0 desc",
+              img: "https://img.com",
+              lat: -1.069876,
+              long: 51.6562,
+              name: "pet0",
+              species: "species0",
+              petId: "pet0",
+            });
+          });
+      });
     });
   });
 });
