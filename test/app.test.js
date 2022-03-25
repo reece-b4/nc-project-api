@@ -6,7 +6,8 @@ const app = require("../app");
 const data = require("../db/data");
 const request = require("supertest");
 const seed = require("../db/seeds/seed");
-const { getPets } = require("../controllers/pets.controller");
+const { fetchPets } = require("../models/pets.model");
+const { fetchUserByUserId } = require("../models/users.model");
 
 beforeEach(() => seed(data));
 
@@ -186,28 +187,34 @@ describe("app", () => {
 
 describe("/users/:userId/pets", () => {
   describe("POST", () => {
-    it.only("should have status 201", () => {
+    it("should have status 201 and a pet should be added to the pet collection and under the users pet array", () => {
       return request(app)
         .post("/api/users/user1/pets")
         .send({
+          owner: "user1",
           name: "newPet",
           age: 1,
           species: "someSpecies",
           breed: "someBreed",
-          image: "imageLink",
+          img: "imageLink",
           lat: 11,
           long: 25,
           desc: "any desc",
           funFact: "fun",
         })
-        .expect(201);
-      // .then(() => {
-      //   getPets();
-      // })
-      // .then(({ body: { pets } }) => {
-      //   console.log(pets);
-      //   expect(pets).to.have.lengthOf(6);
-      // });
+        .expect(201)
+        .then(() => {
+          return fetchPets();
+        })
+        .then((pets) => {
+          expect(pets).to.have.lengthOf(6);
+          expect(pets.some((pet) => pet.info.name === "newPet")).to.be.true;
+
+          return fetchUserByUserId("user1");
+        })
+        .then((user) => {
+          expect(user.info.pets).to.have.lengthOf(2);
+        });
     });
   });
 });

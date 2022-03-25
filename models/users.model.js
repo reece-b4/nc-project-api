@@ -1,3 +1,4 @@
+const { FieldValue } = require("@google-cloud/firestore");
 const db = require("../db/connection");
 
 exports.fetchUsers = async () => {
@@ -35,5 +36,11 @@ exports.updateUserByUserId = async (userId, updatedFields) => {
 };
 
 exports.addPetByUserId = async (userId, newPetInfo) => {
-  return await db.collection("pets").add(newPetInfo);
+  const petId = await db.collection("pets").add(newPetInfo);
+  await db
+    .collection("users")
+    .doc(userId)
+    .update({
+      pets: FieldValue.arrayUnion({ petId: petId.id, ...newPetInfo }),
+    });
 };

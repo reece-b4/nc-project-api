@@ -82,5 +82,5 @@ exports.postPetByUserId = (req, res, next) => {
     .then(() => {
       res.status(201).send();
     })
-    .catch(console.log);
+    .catch(next);
 };

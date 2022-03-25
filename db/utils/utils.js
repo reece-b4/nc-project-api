@@ -3,7 +3,7 @@ const { fetchUsers, fetchUserByUserId } = require("../../models/users.model");
 
 exports.isUsernameTaken = async (username) => {
   const users = await fetchUsers();
-  const isTaken = await users.some((user) => username === user.info.username);
+  const isTaken = users.some((user) => username === user.info.username);
   return isTaken;
 };
 

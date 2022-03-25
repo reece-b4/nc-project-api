@@ -44,6 +44,7 @@ const seed = async ({ userData, petData }) => {
         username: user.username,
         lat: user.lat,
         long: user.long,
+        pets: user.pets,
       });
     })
   );
