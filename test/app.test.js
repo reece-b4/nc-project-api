@@ -201,5 +201,15 @@ describe("app", () => {
           });
       });
     });
+    describe("DELETE", () => {
+      it(`should have a status of 204 and delete pet by its id`, () => {
+        return request(app)
+          .delete("/api/pets/pet0")
+          .expect(204)
+          .then(({ body }) => {
+            expect(body).to.equal({});
+          });
+      });
+    });
   });
 });
