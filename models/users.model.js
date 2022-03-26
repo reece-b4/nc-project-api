@@ -54,3 +54,13 @@ exports.fetchPetsByUserId = async (userId) => {
   const userRef = await db.collection("users").doc(userId).get();
   return userRef.data().pets;
 };
+
+exports.addReviewToUserByUserId = async (userId, newReview) => {
+  const timestamp = Date.now();
+  await db
+    .collection("users")
+    .doc(userId)
+    .update({
+      reviews: FieldValue.arrayUnion({ timestamp, ...newReview }),
+    });
+};

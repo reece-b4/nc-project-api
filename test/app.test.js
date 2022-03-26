@@ -264,7 +264,23 @@ describe("app", () => {
           });
       });
     });
-    describe("POST", () => {});
+    describe("POST", () => {
+      it(`should have a status 201 and the new review should be added to the users
+          review array with a generated timestamp (number)`, () => {
+        return request(app)
+          .post("/api/users/user3/reviews")
+          .send({ review_by: "user3", content: "New review in array" })
+          .expect(201)
+          .then(() => {
+            return request(app)
+              .get("/api/users/user3/reviews")
+              .then(({ body: { reviews } }) => {
+                expect(reviews).to.have.lengthOf(4);
+                expect(reviews[3].timestamp).to.be.a("number");
+              });
+          });
+      });
+    });
     describe("DELETE", () => {});
   });
   describe("/pets/:petId", () => {

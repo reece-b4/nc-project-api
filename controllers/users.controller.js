@@ -6,6 +6,7 @@ const {
   updateUserByUserId,
   addPetByUserId,
   fetchPetsByUserId,
+  addReviewToUserByUserId,
 } = require("../models/users.model");
 const {
   isUsernameTaken,
@@ -113,6 +114,16 @@ exports.getReviewsForUserByUserId = (req, res, next) => {
     .then((data) => {
       const reviews = data.info.reviews;
       res.status(200).send({ reviews });
+    })
+    .catch(next);
+};
+
+exports.postReviewToUserByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  const newReview = req.body;
+  return addReviewToUserByUserId(userId, newReview)
+    .then(() => {
+      res.status(201).send();
     })
     .catch(next);
 };
