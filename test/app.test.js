@@ -252,6 +252,21 @@ describe("app", () => {
       });
     });
   });
+  describe.only("/users/:userId/reviews", () => {
+    describe("GET", () => {
+      it(`should have a status of 200 and return an array of reviews for that
+          user under the key of reviews`, () => {
+        return request(app)
+          .get("/api/users/user3/reviews")
+          .expect(200)
+          .then(({ body: { reviews } }) => {
+            expect(reviews).to.have.lengthOf(3);
+          });
+      });
+    });
+    describe("POST", () => {});
+    describe("DELETE", () => {});
+  });
   describe("/pets/:petId", () => {
     describe("GET", () => {
       it(`should have status of 200 and return pet object with string values under the keys of

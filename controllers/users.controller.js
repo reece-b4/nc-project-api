@@ -106,3 +106,13 @@ exports.getPetsByUserId = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.getReviewsForUserByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  return fetchUserByUserId(userId)
+    .then((data) => {
+      const reviews = data.info.reviews;
+      res.status(200).send({ reviews });
+    })
+    .catch(next);
+};

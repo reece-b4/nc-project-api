@@ -6,6 +6,7 @@ const {
   patchUserByUserId,
   getPetsByUserId,
   postPetByUserId,
+  getReviewsForUserByUserId,
 } = require("../controllers/users.controller");
 const usersRouter = require("express").Router();
 
@@ -18,5 +19,7 @@ usersRouter
   .patch(patchUserByUserId);
 
 usersRouter.route("/:userId/pets").get(getPetsByUserId).post(postPetByUserId);
+
+usersRouter.route("/:userId/reviews").get(getReviewsForUserByUserId);
 
 module.exports = usersRouter;
