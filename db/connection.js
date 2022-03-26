@@ -1,6 +1,6 @@
 const fs = require("firebase-admin");
 
-const { NODE_ENV = test } = process.env;
+const { NODE_ENV = "test" } = process.env;
 
 if (NODE_ENV === "production") {
   const firebaseCredentials = JSON.parse(
