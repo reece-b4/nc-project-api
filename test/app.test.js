@@ -101,6 +101,17 @@ describe("app", () => {
             expect(users).to.have.lengthOf(4);
           });
       });
+      it(`delete all of the users pets from the pets collection`, () => {
+        return request(app)
+          .delete("/api/users/user1")
+          .expect(204)
+          .then(() => {
+            return fetchPets();
+          })
+          .then((pets) => {
+            expect(pets).to.have.lengthOf(4);
+          });
+      });
       it(`should have a status of 404 with 'no user with that userId' on a key of msg
           when the :userId doesn't exist in the databse`, () => {
         return request(app)

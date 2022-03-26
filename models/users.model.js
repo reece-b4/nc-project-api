@@ -26,8 +26,14 @@ exports.fetchUserByUserId = async (userId) => {
 };
 
 exports.removeUserByUserId = async (userId) => {
-  const doc = await db.collection("users").doc(userId).delete();
-  return doc;
+  let usersPets = await db.collection("users").doc(userId).get();
+  usersPets = usersPets.data().pets || [];
+  usersPets = usersPets.map((pet) => pet.petId);
+  const removeFromUsers = await db.collection("users").doc(userId).delete();
+  const removeUsersPets = usersPets.map((petId) => {
+    return db.collection("pets").doc(petId).delete();
+  });
+  return Promise.all([removeFromUsers, ...removeUsersPets]);
 };
 
 exports.updateUserByUserId = async (userId, updatedFields) => {
