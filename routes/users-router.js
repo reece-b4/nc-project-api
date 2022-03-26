@@ -4,6 +4,7 @@ const {
   getUserByUserId,
   deleteUserByUserId,
   patchUserByUserId,
+  getPetsByUserId,
   postPetByUserId,
 } = require("../controllers/users.controller");
 const usersRouter = require("express").Router();
@@ -16,6 +17,6 @@ usersRouter
   .delete(deleteUserByUserId)
   .patch(patchUserByUserId);
 
-usersRouter.route("/:userId/pets").post(postPetByUserId);
+usersRouter.route("/:userId/pets").get(getPetsByUserId).post(postPetByUserId);
 
 module.exports = usersRouter;
