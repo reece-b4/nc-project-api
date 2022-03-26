@@ -64,3 +64,10 @@ exports.addReviewToUserByUserId = async (userId, newReview) => {
       reviews: FieldValue.arrayUnion({ timestamp, ...newReview }),
     });
 };
+
+exports.removeReviewFromUserByIndex = async (userId, index) => {
+  let userReviews = await db.collection("users").doc(userId).get();
+  userReviews = userReviews.data().reviews;
+  userReviews.splice(index, 1);
+  await db.collection("users").doc(userId).update({ reviews: userReviews });
+};

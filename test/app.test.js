@@ -281,7 +281,23 @@ describe("app", () => {
           });
       });
     });
-    describe("DELETE", () => {});
+    describe("DELETE", () => {
+      it(`should have a status 204 and the review matching the index should be
+          deleted from the users review array`, () => {
+        return request(app)
+          .delete("/api/users/user3/reviews")
+          .send({ index: 0 })
+          .expect(204)
+          .then(() => {
+            return request(app)
+              .get("/api/users/user3/reviews")
+              .then(({ body: { reviews } }) => {
+                expect(reviews).to.have.lengthOf(2);
+                expect(reviews[0].content).to.equal("Second review text here");
+              });
+          });
+      });
+    });
   });
   describe("/pets/:petId", () => {
     describe("GET", () => {

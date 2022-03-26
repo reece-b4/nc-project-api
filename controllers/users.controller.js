@@ -7,6 +7,7 @@ const {
   addPetByUserId,
   fetchPetsByUserId,
   addReviewToUserByUserId,
+  removeReviewFromUserByIndex,
 } = require("../models/users.model");
 const {
   isUsernameTaken,
@@ -124,6 +125,16 @@ exports.postReviewToUserByUserId = (req, res, next) => {
   return addReviewToUserByUserId(userId, newReview)
     .then(() => {
       res.status(201).send();
+    })
+    .catch(next);
+};
+
+exports.deleteReviewFromUserByIndex = (req, res, next) => {
+  const userId = req.params.userId;
+  const index = req.body.index;
+  return removeReviewFromUserByIndex(userId, index)
+    .then(() => {
+      res.status(204).send();
     })
     .catch(next);
 };
