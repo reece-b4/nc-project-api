@@ -252,7 +252,7 @@ describe("app", () => {
       });
     });
   });
-  describe.only("/users/:userId/reviews", () => {
+  describe("/users/:userId/reviews", () => {
     describe("GET", () => {
       it(`should have a status of 200 and return an array of reviews for that
           user under the key of reviews`, () => {
