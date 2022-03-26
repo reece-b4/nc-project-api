@@ -4,7 +4,7 @@ module.exports = [
     username: "username1",
     lat: -1.069876,
     long: 51.6562,
-    pets: [{ name: "placeholderPet" }],
+    pets: [{ name: "placeholderPet", petId: "pet1" }],
   },
   {
     username: "username2",

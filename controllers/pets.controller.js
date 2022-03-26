@@ -2,6 +2,7 @@ const {
   fetchPets,
   fetchPetById,
   removePetById,
+  updatePetByPetId,
 } = require("../models/pets.model");
 
 const {
@@ -56,6 +57,16 @@ exports.deletePetById = (req, res, next) => {
   return removePetById(petId, userId)
     .then(() => {
       res.status(204).send();
+    })
+    .catch(next);
+};
+
+exports.patchPetByPetId = (req, res, next) => {
+  const { petId } = req.params;
+  const { userId, updatedInfo } = req.body;
+  return updatePetByPetId(petId, userId, updatedInfo)
+    .then(() => {
+      res.status(200).send();
     })
     .catch(next);
 };

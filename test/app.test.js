@@ -6,7 +6,7 @@ const app = require("../app");
 const data = require("../db/data");
 const request = require("supertest");
 const seed = require("../db/seeds/seed");
-const { fetchPets } = require("../models/pets.model");
+const { fetchPets, fetchPetById } = require("../models/pets.model");
 const { fetchUserByUserId, fetchUsers } = require("../models/users.model");
 const { describe } = require("mocha");
 
@@ -244,8 +244,7 @@ describe("app", () => {
   describe("/pets/:petId", () => {
     describe("GET", () => {
       it(`should have status of 200 and return pet object with string values under the keys of
-         'petId', 'name', 'species', 'desc' and 'img'
-    as well as an int on the key of age `, () => {
+         'petId', 'name', 'species', 'desc' and 'img' as well as an int on the key of age `, () => {
         return request(app)
           .get("/api/pets/pet0")
           .expect(200)
@@ -258,6 +257,29 @@ describe("app", () => {
             expect(pet.long).to.equal(51.6562);
             expect(pet.name).to.equal("pet0");
             expect(pet.species).to.equal("species0");
+          });
+      });
+    });
+    describe("PATCH", () => {
+      it(`should have status of 200 and the pet with the petId parameter is updated
+          in both the pets collection and under the appropriate user`, () => {
+        return request(app)
+          .patch("/api/pets/pet1")
+          .send({ userId: "user1", updatedInfo: { name: "newName", age: 100 } })
+          .expect(200)
+          .then(() => {
+            return fetchPetById("pet1");
+          })
+          .then((data) => {
+            expect(data.info.name).to.equal("newName");
+            expect(data.info.age).to.equal(100);
+
+            return fetchUserByUserId("user1");
+          })
+          .then((data) => {
+            const updatedPet = data.info.pets[0];
+            expect(updatedPet.name).to.equal("newName");
+            expect(updatedPet.age).to.equal(100);
           });
       });
     });

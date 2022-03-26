@@ -28,3 +28,20 @@ exports.removePetById = async (petId, userId) => {
 
   await Promise.all([deleteFromPets, deleteFromuser]);
 };
+
+exports.updatePetByPetId = async (petId, userId, updatedFields) => {
+  await db.collection("pets").doc(petId).update(updatedFields);
+
+  // get updated pet details, replace it in users pet list and update
+  let updatedPet = await db.collection("pets").doc(petId).get();
+  updatedPet = updatedPet.data();
+  let usersPets = await db.collection("users").doc(userId).get();
+  usersPets = usersPets.data().pets;
+  const updatedPets = usersPets.map((pet) => {
+    if (pet.petId === petId) return updatedPet;
+    return pet;
+  });
+  await db.collection("users").doc(userId).update({
+    pets: updatedPets,
+  });
+};
