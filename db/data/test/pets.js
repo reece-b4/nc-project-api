@@ -1,6 +1,5 @@
 module.exports = [
   {
-    owner: "user2",
     name: "pet0",
     species: "species0",
     desc: "pet0 desc",
@@ -10,7 +9,7 @@ module.exports = [
     long: 51.6562,
   },
   {
-    owner: "user0",
+    owner: "user1",
     name: "pet1",
     species: "species1",
     desc: "pet1 desc",
@@ -20,7 +19,6 @@ module.exports = [
     long: 51.807033,
   },
   {
-    owner: "user1",
     name: "pet2",
     species: "species0",
     desc: "pet2 desc",
@@ -30,7 +28,6 @@ module.exports = [
     long: 51.802001,
   },
   {
-    owner: "user4",
     name: "pet3",
     species: "species2",
     desc: "pet3 desc",
@@ -40,7 +37,6 @@ module.exports = [
     long: 53.802333,
   },
   {
-    owner: "user2",
     name: "pet4",
     species: "species3",
     desc: "pet4 desc",

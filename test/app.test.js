@@ -137,7 +137,7 @@ describe("app", () => {
           as well as an int on the key of age, lat and long`, () => {
         return request(app)
           .get("/api/pets")
-          .send({ userId: "user0" })
+          .send({ userId: "user3" })
           .expect(200)
           .then(({ body: { pets } }) => {
             expect(pets).to.have.lengthOf(5);
@@ -151,6 +151,15 @@ describe("app", () => {
               expect(pet.lat).to.be.a("number");
               expect(pet.long).to.be.a("number");
             });
+          });
+      });
+      it(`should filter out any pets owned by the userId sent in the body`, () => {
+        return request(app)
+          .get("/api/pets")
+          .send({ userId: "user1" })
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.have.lengthOf(4);
           });
       });
       it(`should have a status of 200 and return a filtered list of pets by species`, () => {
