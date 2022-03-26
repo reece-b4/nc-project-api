@@ -5,6 +5,7 @@ const {
   removeUserByUserId,
   updateUserByUserId,
   addPetByUserId,
+  fetchPetsByUserId,
 } = require("../models/users.model");
 const {
   isUsernameTaken,
@@ -93,6 +94,15 @@ exports.postPetByUserId = (req, res, next) => {
   return addPetByUserId(userId, req.body)
     .then(() => {
       res.status(201).send();
+    })
+    .catch(next);
+};
+
+exports.getPetsByUserId = (req, res, next) => {
+  const userId = req.params.userId;
+  return fetchPetsByUserId(userId)
+    .then((pets) => {
+      res.status(200).send({ pets });
     })
     .catch(next);
 };

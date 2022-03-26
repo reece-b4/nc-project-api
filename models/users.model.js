@@ -43,3 +43,8 @@ exports.addPetByUserId = async (userId, newPetInfo) => {
       pets: FieldValue.arrayUnion({ petId: petId.id, ...newPetInfo }),
     });
 };
+
+exports.fetchPetsByUserId = async (userId) => {
+  const userRef = await db.collection("users").doc(userId).get();
+  return userRef.data().pets;
+};

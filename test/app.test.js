@@ -8,6 +8,7 @@ const request = require("supertest");
 const seed = require("../db/seeds/seed");
 const { fetchPets } = require("../models/pets.model");
 const { fetchUserByUserId, fetchUsers } = require("../models/users.model");
+const { describe } = require("mocha");
 
 beforeEach(() => seed(data));
 
@@ -188,6 +189,16 @@ describe("app", () => {
     });
   });
   describe("/users/:userId/pets", () => {
+    describe("GET", () => {
+      it(`should have status 200 and return an array of pet objects for the parameter user`, () => {
+        return request(app)
+          .get("/api/users/user2/pets")
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.have.lengthOf(2);
+          });
+      });
+    });
     describe("POST", () => {
       it(`should have status 201 and a pet should be added to the pet collection
           and under the users pet array`, () => {
