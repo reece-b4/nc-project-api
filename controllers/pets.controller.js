@@ -17,7 +17,8 @@ exports.getPets = (req, res, next) => {
       return Promise.all([lat, long, fetchPets(species)]);
     })
     .then(([lat, long, data]) => {
-      let pets = data.map((pet) => {
+      let pets = data.filter((pet) => pet.info.owner !== userId);
+      pets = pets.map((pet) => {
         const distance = calculateDistance(
           lat,
           long,
