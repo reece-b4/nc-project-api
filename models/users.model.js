@@ -15,7 +15,6 @@ exports.fetchUsers = async () => {
 exports.addUser = async (lat, long, userInfo) => {
   userInfo.lat = lat;
   userInfo.long = long;
-  delete userInfo.postcode;
   const newUser = await db.collection("users").add(userInfo);
   return newUser.id;
 };
