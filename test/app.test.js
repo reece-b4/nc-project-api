@@ -225,7 +225,6 @@ describe("app", () => {
         return request(app)
           .post("/api/users/user1/pets")
           .send({
-            owner: "user1",
             name: "newPet",
             age: 1,
             species: "someSpecies",
