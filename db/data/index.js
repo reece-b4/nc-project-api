@@ -1,5 +1,6 @@
 const testData = require("./test");
+const devData = require("./dev");
 
-const data = { test: testData };
+const data = { test: testData, dev: devData };
 
-module.exports = data["test"];
+module.exports = data;

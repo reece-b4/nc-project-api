@@ -3,14 +3,14 @@ const { expect } = chai;
 chai.use(require("chai-sorted"));
 
 const app = require("../app");
-const data = require("../db/data");
+const { test } = require("../db/data");
 const request = require("supertest");
 const seed = require("../db/seeds/seed");
 const { fetchPets, fetchPetById } = require("../models/pets.model");
 const { fetchUserByUserId, fetchUsers } = require("../models/users.model");
 const { describe } = require("mocha");
 
-beforeEach(() => seed(data));
+beforeEach(() => seed(test));
 
 describe("app", () => {
   describe("/users", () => {
