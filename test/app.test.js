@@ -37,10 +37,10 @@ describe("app", () => {
           the key of userId. Postcode should be converted to lat/long`, () => {
         return request(app)
           .post("/api/users")
-          .send({ username: "newUser", postcode: "SW1A2AA" })
+          .send({ userId: "user10", username: "newUser", postcode: "SW1A2AA" })
           .expect(201)
           .then(({ body: { userId } }) => {
-            expect(userId).to.be.a("string");
+            expect(userId).to.equal("user10");
           })
           .then(() => {
             return fetchUsers();
@@ -51,6 +51,9 @@ describe("app", () => {
               true
             );
             expect(users.some((user) => user.info.long === -0.127695)).to.equal(
+              true
+            );
+            expect(users.some((user) => user.userId === "user10")).to.equal(
               true
             );
           });

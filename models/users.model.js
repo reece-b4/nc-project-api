@@ -15,8 +15,9 @@ exports.fetchUsers = async () => {
 exports.addUser = async (lat, long, userInfo) => {
   userInfo.lat = lat;
   userInfo.long = long;
-  const newUser = await db.collection("users").add(userInfo);
-  return newUser.id;
+  const userId = userInfo.userId;
+  await db.collection("users").doc(userId).set(userInfo);
+  return userId;
 };
 
 exports.fetchUserByUserId = async (userId) => {
