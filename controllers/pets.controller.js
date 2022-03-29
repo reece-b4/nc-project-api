@@ -36,7 +36,7 @@ exports.getPets = (req, res, next) => {
       if (limit) pets = pets.filter((pet) => pet.distance <= limit);
 
       if (search) {
-        const regex = RegExp(`.*${search}.*`, "g");
+        const regex = RegExp(`.*${search}.*`, "gi");
         pets = pets.filter((pet) => regex.test(JSON.stringify(pet)));
       }
 
