@@ -209,6 +209,15 @@ describe("app", () => {
             });
           });
       });
+      it(`should have status 200 and can filter out based on a search query`, () => {
+        return request(app)
+          .get("/api/pets?search=inquiro")
+          .send({ userId: "user0" })
+          .expect(200)
+          .then(({ body: { pets } }) => {
+            expect(pets).to.have.lengthOf(1);
+          });
+      });
     });
   });
   describe("/users/:userId/pets", () => {

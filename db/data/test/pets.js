@@ -12,7 +12,7 @@ module.exports = [
     owner: "user1",
     name: "pet1",
     species: "species1",
-    desc: "pet1 desc",
+    desc: "pet1 desc includes inquiro for testing search",
     img: "https://img.com",
     age: 2,
     lat: -1.274185,
