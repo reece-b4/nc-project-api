@@ -38,7 +38,7 @@ exports.updatePetByPetId = async (petId, userId, updatedFields) => {
   let usersPets = await db.collection("users").doc(userId).get();
   usersPets = usersPets.data().pets;
   const updatedPets = usersPets.map((pet) => {
-    if (pet.petId === petId) return updatedPet;
+    if (pet.petId === petId) return { petId, ...updatedPet };
     return pet;
   });
   await db.collection("users").doc(userId).update({

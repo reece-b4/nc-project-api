@@ -145,7 +145,7 @@ describe("app", () => {
   });
   describe("/pets", () => {
     describe("PATCH", () => {
-      it.only(`should have a status of 200 and return a list of all pets on
+      it(`should have a status of 200 and return a list of all pets on
           a key of 'pets'. Each pet is an object containing string values
           under the keys of 'petId', 'name', 'species', 'desc' and 'img'
           as well as an int on the key of age, lat and long`, () => {
