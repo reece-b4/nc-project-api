@@ -7,7 +7,7 @@ const {
   patchPetByPetId,
 } = require("../controllers/pets.controller");
 
-petsRouter.route("/").get(getPets);
+petsRouter.route("/").patch(getPets);
 petsRouter
   .route("/:petId")
   .get(getPetById)
