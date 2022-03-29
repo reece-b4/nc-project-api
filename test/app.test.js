@@ -144,13 +144,13 @@ describe("app", () => {
     });
   });
   describe("/pets", () => {
-    describe("GET", () => {
-      it(`should have a status of 200 and return a list of all pets on
+    describe("PATCH", () => {
+      it.only(`should have a status of 200 and return a list of all pets on
           a key of 'pets'. Each pet is an object containing string values
           under the keys of 'petId', 'name', 'species', 'desc' and 'img'
           as well as an int on the key of age, lat and long`, () => {
         return request(app)
-          .get("/api/pets")
+          .patch("/api/pets")
           .send({ userId: "user3" })
           .expect(200)
           .then(({ body: { pets } }) => {
@@ -169,7 +169,7 @@ describe("app", () => {
       });
       it(`should filter out any pets owned by the userId sent in the body`, () => {
         return request(app)
-          .get("/api/pets")
+          .patch("/api/pets")
           .send({ userId: "user1" })
           .expect(200)
           .then(({ body: { pets } }) => {
@@ -178,7 +178,7 @@ describe("app", () => {
       });
       it(`should have a status of 200 and return a filtered list of pets by species`, () => {
         return request(app)
-          .get("/api/pets?species=species0")
+          .patch("/api/pets?species=species0")
           .send({ userId: "user0" })
           .expect(200)
           .then(({ body: { pets } }) => {
@@ -190,7 +190,7 @@ describe("app", () => {
       });
       it(`should have a status of 200 and be ordered by distance from user`, () => {
         return request(app)
-          .get("/api/pets")
+          .patch("/api/pets")
           .send({ userId: "user0" })
           .expect(200)
           .then(({ body: { pets } }) => {
@@ -199,7 +199,7 @@ describe("app", () => {
       });
       it(`should have status 200 and can set max distance via a query`, () => {
         return request(app)
-          .get("/api/pets?limit=20")
+          .patch("/api/pets?limit=20")
           .send({ userId: "user0" })
           .expect(200)
           .then(({ body: { pets } }) => {
@@ -211,7 +211,7 @@ describe("app", () => {
       });
       it(`should have status 200 and can filter out based on a search query`, () => {
         return request(app)
-          .get("/api/pets?search=inquiro")
+          .patch("/api/pets?search=inquiro")
           .send({ userId: "user0" })
           .expect(200)
           .then(({ body: { pets } }) => {
