@@ -11,7 +11,7 @@ const {
 } = require("../db/utils/utils");
 
 exports.getPets = (req, res, next) => {
-  const { species, limit } = req.query;
+  const { species, limit, search } = req.query;
   const { userId } = req.body;
   return getUserLatLongByUserId(userId)
     .then(({ lat, long }) => {
@@ -34,6 +34,11 @@ exports.getPets = (req, res, next) => {
       });
 
       if (limit) pets = pets.filter((pet) => pet.distance <= limit);
+
+      if (search) {
+        const regex = RegExp(`.*${search}.*`, "g");
+        pets = pets.filter((pet) => regex.test(JSON.stringify(pet)));
+      }
 
       pets.sort((a, b) => a.distance - b.distance);
       res.status(200).send({ pets });
