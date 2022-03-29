@@ -41,9 +41,13 @@ exports.updateUserByUserId = async (userId, updatedFields) => {
 };
 
 exports.addPetByUserId = async (userId, newPetInfo) => {
-  const petId = await db
-    .collection("pets")
-    .add({ owner: userId, ...newPetInfo });
+  const { info: userInfo } = await this.fetchUserByUserId(userId);
+  const petId = await db.collection("pets").add({
+    owner: userId,
+    lat: userInfo.lat,
+    long: userInfo.long,
+    ...newPetInfo,
+  });
   await db
     .collection("users")
     .doc(userId)

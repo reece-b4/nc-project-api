@@ -224,7 +224,8 @@ describe("app", () => {
     });
     describe("POST", () => {
       it(`should have status 201 and a pet should be added to the pet collection
-          and under the users pet array`, () => {
+          and under the users pet array, The users lat and long should also be inherited
+          by the pet in the pets collection`, () => {
         return request(app)
           .post("/api/users/user1/pets")
           .send({
@@ -233,8 +234,6 @@ describe("app", () => {
             species: "someSpecies",
             breed: "someBreed",
             img: "imageLink",
-            lat: 11,
-            long: 25,
             desc: "any desc",
             funFact: "fun",
           })
@@ -246,10 +245,12 @@ describe("app", () => {
             expect(pets).to.have.lengthOf(6);
             expect(pets.some((pet) => pet.info.name === "newPet")).to.be.true;
 
-            return fetchUserByUserId("user1");
+            return Promise.all([pets, fetchUserByUserId("user1")]);
           })
-          .then((user) => {
+          .then(([pets, user]) => {
             expect(user.info.pets).to.have.lengthOf(2);
+            expect(pets[0].info.lat).to.equal(user.info.lat);
+            expect(pets[0].info.long).to.equal(user.info.long);
           });
       });
     });
