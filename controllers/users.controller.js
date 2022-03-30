@@ -122,7 +122,11 @@ exports.getReviewsForUserByUserId = (req, res, next) => {
 exports.postReviewToUserByUserId = (req, res, next) => {
   const userId = req.params.userId;
   const newReview = req.body;
-  return addReviewToUserByUserId(userId, newReview)
+  return fetchUserByUserId(newReview.reviewerId)
+    .then((user) => {
+      const username = user.info.username;
+      return addReviewToUserByUserId(userId, username, newReview);
+    })
     .then(() => {
       res.status(201).send();
     })

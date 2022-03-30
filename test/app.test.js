@@ -281,7 +281,10 @@ describe("app", () => {
           review array with a generated timestamp (number)`, () => {
         return request(app)
           .post("/api/users/user3/reviews")
-          .send({ review_by: "user3", content: "New review in array" })
+          .send({
+            reviewerId: "user1",
+            content: "New review in array",
+          })
           .expect(201)
           .then(() => {
             return request(app)
@@ -289,6 +292,7 @@ describe("app", () => {
               .then(({ body: { reviews } }) => {
                 expect(reviews).to.have.lengthOf(4);
                 expect(reviews[3].timestamp).to.be.a("number");
+                expect(reviews[3].username).to.equal("username1");
               });
           });
       });
