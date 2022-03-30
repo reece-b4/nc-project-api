@@ -65,10 +65,14 @@ exports.calculateDistance = (lat1, lon1, lat2, lon2) => {
   return dist;
 };
 
-exports.getLatLongFromPostcode = (postcode) => {
+exports.getDetailsFromPostcode = (postcode) => {
   return axios
     .get(`https://api.postcodes.io/postcodes/${postcode}`)
     .then(({ data: { result } }) => {
-      return { lat: result.latitude, long: result.longitude };
+      return {
+        lat: result.latitude,
+        long: result.longitude,
+        adminWard: result.admin_ward,
+      };
     });
 };

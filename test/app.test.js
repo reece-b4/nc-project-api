@@ -56,6 +56,9 @@ describe("app", () => {
             expect(users.some((user) => user.userId === "user10")).to.equal(
               true
             );
+            expect(
+              users.some((user) => user.info.area === "St James's")
+            ).to.equal(true);
           });
       });
       it(`should have a status 400 with "missing required field" on a key of msg

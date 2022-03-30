@@ -12,7 +12,7 @@ const {
 const {
   isUsernameTaken,
   isUserIdPresent,
-  getLatLongFromPostcode,
+  getDetailsFromPostcode,
 } = require("../db/utils/utils");
 
 exports.getUsers = (_, res, next) => {
@@ -43,10 +43,10 @@ exports.postUser = (req, res, next) => {
           status: 400,
           msg: "missing required field",
         });
-      return getLatLongFromPostcode(req.body.postcode);
+      return getDetailsFromPostcode(req.body.postcode);
     })
-    .then(({ lat, long }) => {
-      return addUser(lat, long, req.body);
+    .then(({ lat, long, adminWard }) => {
+      return addUser(lat, long, adminWard, req.body);
     })
     .then((userId) => {
       res.status(201).send({ userId });

@@ -12,9 +12,10 @@ exports.fetchUsers = async () => {
   return data;
 };
 
-exports.addUser = async (lat, long, userInfo) => {
+exports.addUser = async (lat, long, area, userInfo) => {
   userInfo.lat = lat;
   userInfo.long = long;
+  userInfo.area = area;
   const userId = userInfo.userId;
   await db.collection("users").doc(userId).set(userInfo);
   return userId;
