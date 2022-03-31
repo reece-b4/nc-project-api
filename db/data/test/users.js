@@ -20,17 +20,17 @@ module.exports = [
       {
         review_by: "user0",
         content: "Review text here",
-        timestamp: "date here",
+        timestamp: 2,
       },
       {
         review_by: "user1",
         content: "Second review text here",
-        timestamp: "date here",
+        timestamp: 1,
       },
       {
         review_by: "user4",
         content: "Third review text here",
-        timestamp: "date here",
+        timestamp: 3,
       },
     ],
   },

@@ -113,7 +113,9 @@ exports.getReviewsForUserByUserId = (req, res, next) => {
   const userId = req.params.userId;
   return fetchUserByUserId(userId)
     .then((data) => {
-      const reviews = data.info.reviews;
+      const reviews = data.info.reviews.sort(
+        (b, a) => a.timestamp - b.timestamp
+      );
       res.status(200).send({ reviews });
     })
     .catch(next);
