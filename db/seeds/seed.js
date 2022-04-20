@@ -2,10 +2,8 @@ const db = require("../connection");
 const { deleteCollection } = require("../utils/utils");
 
 const seed = async ({ userData, petData }) => {
-  // Delete users collection
   await deleteCollection(db, "users", 10);
 
-  // Iterate through userData adding each user to the db
   await Promise.all(
     userData.map((user, index) => {
       return db
@@ -15,7 +13,6 @@ const seed = async ({ userData, petData }) => {
     })
   );
 
-  // Delete users collection
   await deleteCollection(db, "pets", 10);
 
   await Promise.all(
