@@ -294,8 +294,8 @@ describe("app", () => {
               .get("/api/users/user3/reviews")
               .then(({ body: { reviews } }) => {
                 expect(reviews).to.have.lengthOf(4);
-                expect(reviews[3].timestamp).to.be.a("number");
-                expect(reviews[3].username).to.equal("username1");
+                expect(reviews[0].timestamp).to.be.a("number");
+                expect(reviews[0].username).to.equal("username1");
               });
           });
       });
@@ -312,7 +312,7 @@ describe("app", () => {
               .get("/api/users/user3/reviews")
               .then(({ body: { reviews } }) => {
                 expect(reviews).to.have.lengthOf(2);
-                expect(reviews[0].content).to.equal("Second review text here");
+                expect(reviews[0].content).to.equal("Third review text here");
               });
           });
       });
