@@ -11,7 +11,6 @@ const runSeed = async ({ userData, petData }) => {
   const deletePets = await deleteCollection(db, "pets", 10);
   await Promise.all([deleteUsers, deletePets]);
 
-  // Add Users through API calls
   await Promise.all(
     userData.map((user) => {
       axios.post("/api/users", user);
