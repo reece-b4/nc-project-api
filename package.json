@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IanFindlay/nc-project-api.git"
+    "url": "git+https://github.com/reece-b4/nc-project-api.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/IanFindlay/nc-project-api/issues"
+    "url": "https://github.com/reece-b4/nc-project-api/issues"
   },
-  "homepage": "https://github.com/IanFindlay/nc-project-api#readme",
+  "homepage": "https://github.com/reece-b4/nc-project-api#readme",
   "dependencies": {
     "axios": "^0.26.1",
     "cors": "^2.8.5",

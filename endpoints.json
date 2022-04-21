@@ -1,0 +1,151 @@
+{
+  "GET /api": {
+    "description": "serves up a json representation of all the available endpoints of the api"
+  },
+  "GET /api/users": {
+    "description": "serves an array of users",
+    "queries": [],
+    "exampleResponse": 
+    {
+      "userId": "user4",
+      "lat": -1.069876,
+      "username": "username4",
+      "long": 51.6562
+    }
+  },
+  "POST /api/users": {
+    "description": "posts user to users collection",
+    "queries": [],
+    "exampleBody": { "userId": "user10", "username": "newUser", "postcode": "SW1A2AA" },
+    "exampleResponse": {
+    }
+  },
+  "GET users/:userId": {
+    "description": "serves user object",
+    "queries": [],
+    "exampleResponse": {
+      "userId": "user4",
+      "lat": -1.069876,
+      "username": "username4",
+      "long": 51.6562
+    }
+  },
+  "DELETE users/:userId": {
+    "description": "deletes user from users collection and users pets from pets collection",
+    "queries": [],
+    "exampleResponse": {
+    }
+  },
+  "PATCH users/:userId": {
+    "description": "patches data given on key in body of user with given user id ",
+    "queries": [],
+    "exampleBody": { "username": "updatedUsername" },
+    "exampleResponse": {
+    }
+  },
+  "GET users/:userId/reviews": {
+    "description": "returns an array of review for given user",
+    "queries": [],
+    "exampleResponse": {
+      "review_by": "user4",
+      "content": "Third review text here",
+      "timestamp": 3
+    }
+  },
+  "POST users/:userId/reviews": {
+    "description": "posts review for user given",
+    "queries": [],
+    "exampleBody": {
+      "reviewerId": "user1",
+      "content": "New review in array"
+    },
+    "exampleResponse": {
+    }
+  },
+  "DELETE users/:userId/reviews": {
+    "description": "deletes review of user given at index given in body",
+    "queries": [],
+    "exampleBody": { "index": 0 },
+    "exampleResponse": {
+    }
+  },
+  "GET users/:userId/pets": {
+    "description": "serves an array of pets of user given",
+    "queries": [],
+    "exampleResponse": {
+      "age":2,
+      "availability": true,
+      "breed": "Boxer",
+      "desc": "Happy little chap",
+      "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F5dtcNMA4mRPogjpX403ZlHvc1hj2%2F1648727549458.jpg?alt=media&token=320535aa-8236-4e20-8644-c7e951a36eb2",
+      "lat": 53.47196,
+      "long": -2.238185,
+      "name": "Barry",
+      "owner": "5dtcNMA4mRPogjpX403ZlHvc1hj2",
+      "petId": "vEpQCdPeSBG0IooN78N7",
+      "species": "Frog"
+    }
+  },
+  "POST users/:userId/pets": {
+    "description": "posts a pet to given users pets array and to pets collection",
+    "queries": [],
+    "exampleBody": {
+      "name": "newPet",
+      "age": 1,
+      "species": "someSpecies",
+      "breed": "someBreed",
+      "img": "imageLink",
+      "desc": "any desc"
+    },
+    "exampleResponse": {
+    }
+  },
+  "PATCH pets": {
+    "description": "serves array of pets not owned by logged in user ordered by distance from user with possible queries of species(species), max distance(limit) and regex matching text input(inquiro)",
+    "queries": ["species", "limit", "inquiro"],
+    "exampleResponse": {
+      "age":2,
+      "availability": true,
+      "breed": "Boxer",
+      "desc": "Happy little chap",
+      "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F5dtcNMA4mRPogjpX403ZlHvc1hj2%2F1648727549458.jpg?alt=media&token=320535aa-8236-4e20-8644-c7e951a36eb2",
+      "lat": 53.47196,
+      "long": -2.238185,
+      "name": "Barry",
+      "owner": "5dtcNMA4mRPogjpX403ZlHvc1hj2",
+      "petId": "vEpQCdPeSBG0IooN78N7",
+      "species": "Frog"
+    }
+  },
+  "GET /pets/:petId": {
+    "description": "serves a pet object by given id",
+    "queries": [],
+    "exampleResponse": {
+      "age":2,
+      "availability": true,
+      "breed": "Boxer",
+      "desc": "Happy little chap",
+      "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F5dtcNMA4mRPogjpX403ZlHvc1hj2%2F1648727549458.jpg?alt=media&token=320535aa-8236-4e20-8644-c7e951a36eb2",
+      "lat": 53.47196,
+      "long": -2.238185,
+      "name": "Barry",
+      "owner": "5dtcNMA4mRPogjpX403ZlHvc1hj2",
+      "petId": "vEpQCdPeSBG0IooN78N7",
+      "species": "Frog"
+    }
+  },
+  "PATCH /pets/:petId": {
+    "description": "patches pet of given id in both pets collection and appropriate users pets array",
+    "queries": [],
+    "exampleBody": { "userId": "user1", "updatedInfo": { "name": "newName", "age": 100 } },
+    "exampleResponse": {
+    }
+  },
+  "DELETE /pets/:petId": {
+    "description": "deletes pet with given id in both pets collection and appropriate users pets array",
+    "queries": [],
+    "exampleBody": { "userId": "user2" },
+    "exampleResponse": {
+    }
+  }
+}
