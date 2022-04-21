@@ -1,7 +1,4 @@
 {
-  "GET /api": {
-    "description": "serves up a json representation of all the available endpoints of the api"
-  },
   "GET /api/users": {
     "description": "serves an array of users",
     "queries": [],
@@ -100,9 +97,10 @@
     "exampleResponse": {
     }
   },
-  "PATCH pets": {
+  "PATCH /pets": {
     "description": "serves array of pets not owned by logged in user ordered by distance from user with possible queries of species(species), max distance(limit) and regex matching text input(inquiro)",
     "queries": ["species", "limit", "inquiro"],
+    "exampleBody": { "userId": "user3" },
     "exampleResponse": {
       "age":2,
       "availability": true,

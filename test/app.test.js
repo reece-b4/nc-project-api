@@ -155,7 +155,7 @@ describe("app", () => {
           as well as an int on the key of age, lat and long`, () => {
         return request(app)
           .patch("/api/pets")
-          .send({ userId: "user3" })
+          .send({ userId: "5dtcNMA4mRPogjpX403ZlHvc1hj2" })
           .expect(200)
           .then(({ body: { pets } }) => {
             expect(pets).to.have.lengthOf(5);
@@ -390,7 +390,7 @@ describe("app", () => {
         .get('/api')
         .expect(200)
         .then((res)=> {
-          expect(Object.keys(res.body.endpoints)).to.eql(["GET /api", "GET /api/users", "POST /api/users", "GET users/:userId", "DELETE users/:userId", "PATCH users/:userId", "GET users/:userId/reviews", "POST users/:userId/reviews", "DELETE users/:userId/reviews", "GET users/:userId/pets", "POST users/:userId/pets", "PATCH pets", "GET /pets/:petId", "PATCH /pets/:petId", "DELETE /pets/:petId"])
+          expect(Object.keys(res.body.endpoints)).to.eql(["GET /api", "GET /api/users", "POST /api/users", "GET users/:userId", "DELETE users/:userId", "PATCH users/:userId", "GET users/:userId/reviews", "POST users/:userId/reviews", "DELETE users/:userId/reviews", "GET users/:userId/pets", "POST users/:userId/pets", "PATCH /pets", "GET /pets/:petId", "PATCH /pets/:petId", "DELETE /pets/:petId"])
         })
       })
     })
