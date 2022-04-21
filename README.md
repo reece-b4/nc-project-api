@@ -19,6 +19,27 @@ your pet shares using our real-time messaging feature. You can
 leave reviews on other users’ profiles and add, edit and delete pets 
 on your own.
 
+This API repo interacts with users and pets data in the Part Time Pet Firebase Firestore database:
+Endpoints include:
+"GET /users"
+"POST /users"
+"GET /users/:userId"
+"DELETE /users/:userId"
+"PATCH /users/:userId"
+"GET /users/:userId/reviews"
+"POST /users/:userId/reviews"
+"GET /users/:userId/pets"
+"GET /users/:userId/pets"
+"DELETE /users/:userId/reviews"
+"PATCH /pets"
+"GET /pets/:petId"
+"PATCH /pets/:petId"
+"DELETE /pets/:petId"
+
+Queries of:
+species, max distance from user and a regex matching search input can be made on "PATCH /pets"
+
+
 ## Full Project Tech Stack
 Flutter, Firebase, Firestore, Express, Nodejs, Mocha, Chai
 
@@ -45,9 +66,6 @@ In required directory:
 ```sh
 npm install
 ```
-
-## Dependencies
-axios, cors, dotenv, express, firebase-admin <br>
 
 ## Author
 
