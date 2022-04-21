@@ -9,6 +9,7 @@ const seed = require("../db/seeds/seed");
 const { fetchPets, fetchPetById } = require("../models/pets.model");
 const { fetchUserByUserId, fetchUsers } = require("../models/users.model");
 const { describe } = require("mocha");
+chai.config.truncateThreshold = 0;
 
 beforeEach(() => seed(test));
 
@@ -382,4 +383,17 @@ describe("app", () => {
       });
     });
   });
+  describe("/api", () => {
+    describe("GET", ()=> {
+      it('should return JSON describing all available endpoints', () => {
+        return request(app)
+        .get('/api')
+        .expect(200)
+        .then((res)=> {
+          expect(Object.keys(res.body.endpoints)).to.eql(["GET /api", "GET /api/users", "POST /api/users", "GET users/:userId", "DELETE users/:userId", "PATCH users/:userId", "GET users/:userId/reviews", "POST users/:userId/reviews", "DELETE users/:userId/reviews", "GET users/:userId/pets", "POST users/:userId/pets", "PATCH pets", "GET /pets/:petId", "PATCH /pets/:petId", "DELETE /pets/:petId"])
+        })
+      })
+    })
+  })
 });
+
