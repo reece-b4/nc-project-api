@@ -51,6 +51,7 @@ To watch a video of the app in use please go to:
 <br>
 
 ### 🖥️ [Back-end Git Repo](https://github.com/reece-b4/nc-project-api) 
+### 🖥️[Back-end hosted API](https://nc-project-api.herokuapp.com/api/users)
 
 ### 🖥️ [Front-end Git Repo](https://github.com/reece-b4/nc_project)
  <br>
