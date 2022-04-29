@@ -43,17 +43,20 @@ species, max distance from user and a regex matching search input can be made on
 ## Full Project Tech Stack
 Flutter, Firebase, Firestore, Express, Nodejs, Mocha, Chai
 
+Minimum version of Node: 16.13.2
 <br>
-Minimum version of Node: 16.13.2<br>
+
+## Links
 
 To watch a video of the app in use please go to:
-### 🏠 [Northcoders](https://northcoders.com/projects/april-2022) -not yet live-
+## 📹 [Youtube short-video](https://youtu.be/expn-N1t7L4)
+## 📹 [Northcoders full demo-video](https://northcoders.com/projects/april-2022/part-time-pet)
 <br>
 
-### 🖥️ [Back-end Git Repo](https://github.com/reece-b4/nc-project-api) 
-### 🖥️[Back-end hosted API](https://nc-project-api.herokuapp.com/api/users)
+## 🖥️ [Back-end Git Repo](https://github.com/reece-b4/nc-project-api) 
+## 🖥️ [Back-end hosted API](https://nc-project-api.herokuapp.com/api/users)
 
-### 🖥️ [Front-end Git Repo](https://github.com/reece-b4/nc_project)
+## 🖥️ [Front-end Git Repo](https://github.com/reece-b4/nc_project)
  <br>
 
 ## Cloning repo (link above)
