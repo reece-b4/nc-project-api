@@ -2,12 +2,51 @@
   "GET /api/users": {
     "description": "serves an array of users",
     "queries": [],
-    "exampleResponse": 
-    {
-      "userId": "user4",
-      "lat": -1.069876,
-      "username": "username4",
-      "long": 51.6562
+    "exampleResponse": {
+      "users": [
+        {
+          "userId": "5dtcNMA4mRPogjpX403ZlHvc1hj2",
+          "email": "Luke@gmail.com",
+          "conversations": [
+            {
+              "userId": "82ZE3EHIkhZ7oCz83ibcqAoD1862",
+              "name": "AndyJr77",
+              "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F82ZE3EHIkhZ7oCz83ibcqAoD1862%2F1648730104031.jpg?alt=media&token=557dd3cd-21bd-44fb-84a2-02afb719d831"
+            },
+            {
+              "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2FrJSee5PY3whxTzDqZsBR3OGu7Ci1%2F1648727798732.jpg?alt=media&token=c8b62e89-387c-4edc-9aab-3e0dc464f3cd",
+              "name": "Claire97",
+              "userId": "rJSee5PY3whxTzDqZsBR3OGu7Ci1"
+            },
+            {
+              "userId": "xZ24CpZopmbKnSLqry6aKjZCxWI2",
+              "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2FxZ24CpZopmbKnSLqry6aKjZCxWI2%2F1648726400736.jpg?alt=media&token=40cb49a1-c1d0-4c34-8841-dbf2e01dc742",
+              "name": "nondasB"
+            }
+          ],
+          "postcode": "M17ED",
+          "lat": 53.47196,
+          "long": -2.238185,
+          "username": "LukeBooker",
+          "pets": [
+            {
+              "petId": "vEpQCdPeSBG0IooN78N7",
+              "long": -2.238185,
+              "availability": true,
+              "age": "2",
+              "breed": "Boxer",
+              "desc": "Happy little chap",
+              "owner": "5dtcNMA4mRPogjpX403ZlHvc1hj2",
+              "lat": 53.47196,
+              "name": "Barry",
+              "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F5dtcNMA4mRPogjpX403ZlHvc1hj2%2F1648727549458.jpg?alt=media&token=320535aa-8236-4e20-8644-c7e951a36eb2",
+              "species": "Frog"
+            }
+          ],
+          "area": "Deansgate",
+          "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F5dtcNMA4mRPogjpX403ZlHvc1hj2%2F1648723616390.jpg?alt=media&token=c6a3fd10-3d52-446e-8efe-395682acfa79"
+        }
+      ]
     }
   },
   "POST /api/users": {
@@ -15,16 +54,23 @@
     "queries": [],
     "exampleBody": { "userId": "user10", "username": "newUser", "postcode": "SW1A2AA" },
     "exampleResponse": {
+      "userID": "user10"
     }
   },
   "GET users/:userId": {
     "description": "serves user object",
     "queries": [],
     "exampleResponse": {
-      "userId": "user4",
-      "lat": -1.069876,
-      "username": "username4",
-      "long": 51.6562
+      "user": {
+        "userId": "WzafXqVNgDYBjvn3lK1HUcWqk8m2",
+        "area": "Headingley & Hyde Park",
+        "postcode": "ls6 2dg",
+        "long": -1.575731,
+        "username": "maria22",
+        "email": "maria@gmail.com",
+        "lat": 53.819724,
+        "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2FWzafXqVNgDYBjvn3lK1HUcWqk8m2%2F1648746872750.webp?alt=media&token=bed7e986-2686-48ab-8d98-2c286e86f143"
+      }
     }
   },
   "DELETE users/:userId": {
@@ -43,18 +89,22 @@
   "GET users/:userId/reviews": {
     "description": "returns an array of review for given user",
     "queries": [],
-    "exampleResponse": {
-      "review_by": "user4",
-      "content": "Third review text here",
-      "timestamp": 3
-    }
+    "exampleResponse": {"reviews": [
+      {
+        "timestamp": 1648731354050,
+        "content": "I needed an iguana for a photoshoot and Quin helped me out so much by lending me his. Thanks Quin!",
+        "username": "nondasB",
+        "reviewerId": "xZ24CpZopmbKnSLqry6aKjZCxWI2"
+      }
+    ]
+  }
   },
   "POST users/:userId/reviews": {
     "description": "posts review for user given",
     "queries": [],
     "exampleBody": {
-      "reviewerId": "user1",
-      "content": "New review in array"
+      "reviewerId": "Sy3dkfM3Phf9R8ax3dMYeoIkdTj2",
+      "content": "Fantastic iguana; five stars."
     },
     "exampleResponse": {
     }
@@ -70,18 +120,19 @@
     "description": "serves an array of pets of user given",
     "queries": [],
     "exampleResponse": {
-      "age":2,
-      "availability": true,
-      "breed": "Boxer",
-      "desc": "Happy little chap",
-      "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F5dtcNMA4mRPogjpX403ZlHvc1hj2%2F1648727549458.jpg?alt=media&token=320535aa-8236-4e20-8644-c7e951a36eb2",
-      "lat": 53.47196,
-      "long": -2.238185,
-      "name": "Barry",
-      "owner": "5dtcNMA4mRPogjpX403ZlHvc1hj2",
-      "petId": "vEpQCdPeSBG0IooN78N7",
-      "species": "Frog"
-    }
+    "pets": [
+      {
+        "breed": "Rhinoceros Iguana",
+        "species": "Iguana",
+        "name": "Alejandro",
+        "petId": "x5hNGTIKDZoeXMhgdcFF",
+        "age": "4",
+        "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2FSy3dkfM3Phf9R8ax3dMYeoIkdTj2%2F1648728994177.jpg?alt=media&token=c98b3258-e3a2-4526-8db3-44f4f1f527db",
+        "desc": "He’s shy but after 2 marshmallows, he’ll adore you",
+        "availability": true
+      }
+    ]
+  }
   },
   "POST users/:userId/pets": {
     "description": "posts a pet to given users pets array and to pets collection",
@@ -102,34 +153,41 @@
     "queries": ["species", "limit", "inquiro"],
     "exampleBody": { "userId": "user3" },
     "exampleResponse": {
-      "age":2,
-      "availability": true,
-      "breed": "Boxer",
-      "desc": "Happy little chap",
-      "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F5dtcNMA4mRPogjpX403ZlHvc1hj2%2F1648727549458.jpg?alt=media&token=320535aa-8236-4e20-8644-c7e951a36eb2",
-      "lat": 53.47196,
-      "long": -2.238185,
-      "name": "Barry",
-      "owner": "5dtcNMA4mRPogjpX403ZlHvc1hj2",
-      "petId": "vEpQCdPeSBG0IooN78N7",
-      "species": "Frog"
+      "pets": [
+        {
+          "petId": "cyRTExS9axC2NYGolX5l",
+          "distance": 23.1,
+          "desc": "He loves takeaway, games and burying things",
+          "name": "Marcus",
+          "availability": true,
+          "lat": 53.656309,
+          "age": "12",
+          "species": "Dog",
+          "owner": "82ZE3EHIkhZ7oCz83ibcqAoD1862",
+          "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F82ZE3EHIkhZ7oCz83ibcqAoD1862%2F1648730461955.jpg?alt=media&token=c4121611-e2a1-4b16-8276-958eba2f7d7b",
+          "long": -1.76902,
+          "breed": "St Bernard"
+        }
+      ]
     }
   },
   "GET /pets/:petId": {
     "description": "serves a pet object by given id",
     "queries": [],
     "exampleResponse": {
-      "age":2,
-      "availability": true,
-      "breed": "Boxer",
-      "desc": "Happy little chap",
-      "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F5dtcNMA4mRPogjpX403ZlHvc1hj2%2F1648727549458.jpg?alt=media&token=320535aa-8236-4e20-8644-c7e951a36eb2",
-      "lat": 53.47196,
-      "long": -2.238185,
-      "name": "Barry",
-      "owner": "5dtcNMA4mRPogjpX403ZlHvc1hj2",
-      "petId": "vEpQCdPeSBG0IooN78N7",
-      "species": "Frog"
+      "pet": {
+        "petId": "cyRTExS9axC2NYGolX5l",
+        "name": "Marcus",
+        "long": -1.76902,
+        "breed": "St Bernard",
+        "owner": "82ZE3EHIkhZ7oCz83ibcqAoD1862",
+        "age": "12",
+        "availability": true,
+        "img": "https://firebasestorage.googleapis.com/v0/b/petloans-b9778.appspot.com/o/images%2F82ZE3EHIkhZ7oCz83ibcqAoD1862%2F1648730461955.jpg?alt=media&token=c4121611-e2a1-4b16-8276-958eba2f7d7b",
+        "species": "Dog",
+        "desc": "He loves takeaway, games and burying things",
+        "lat": 53.656309
+      }
     }
   },
   "PATCH /pets/:petId": {
@@ -142,7 +200,7 @@
   "DELETE /pets/:petId": {
     "description": "deletes pet with given id in both pets collection and appropriate users pets array",
     "queries": [],
-    "exampleBody": { "userId": "user2" },
+    "exampleBody": { "userId": "82ZE3EHIkhZ7oCz83ibcqAoD1862" },
     "exampleResponse": {
     }
   }
